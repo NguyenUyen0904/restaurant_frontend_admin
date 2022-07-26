@@ -1,0 +1,121 @@
+import { getModule, VuexModule, Mutation, Action, Module } from 'vuex-module-decorators';
+import store from '@/store';
+import { tableService } from './services/api.service';
+import { ITable, IQueryStringTable } from './types';
+import {
+    DEFAULT_FIRST_PAGE,
+    DEFAULT_ORDER_DIRECTION,
+    LIMIT_PER_DROPDOWN,
+} from '@/common/constants';
+import { IBodyResponse, IGetListResponse } from '@/common/types';
+import { DEFAULT_ORDER_BY } from '../user/constants';
+import { appService } from '@/utils/app';
+import { PermissionResources } from '../role/constants';
+
+const initQueryString = {
+    page: DEFAULT_FIRST_PAGE,
+    limit: LIMIT_PER_DROPDOWN,
+    orderBy: DEFAULT_ORDER_BY,
+    orderDirection: DEFAULT_ORDER_DIRECTION,
+    keyword: null,
+    idRestaurant: null,
+};
+
+@Module({ dynamic: true, namespaced: true, store, name: 'table-restaurant' })
+class TableDiagramModule extends VuexModule {
+    tableList: Array<ITable> = [];
+    tableSelected: ITable | null = null;
+
+    isShowBookingsOfTablePopup = false;
+    canChosenTable = false;
+
+    tableQueryString: IQueryStringTable = initQueryString;
+
+    isShowTableFormPopUp = false;
+
+    // GETTERS
+    get userPermissionsTable(): string[] {
+        return appService.getUserPermissionsByResource(PermissionResources.TABLE_DIAGRAM);
+    }
+
+    @Mutation
+    SET_CAN_CHOSEN_TABLE(data: boolean) {
+        this.canChosenTable = data;
+    }
+
+    @Mutation
+    MUTATE_TABLES_RESTAURANTS(data: Array<ITable>) {
+        this.tableList = data;
+    }
+
+    @Mutation
+    SET_SELECTED_TABLE(data: ITable | null) {
+        this.tableSelected = data;
+    }
+
+    @Mutation
+    MUTATE_IS_SHOW_BOOKINGS_OF_TABLE_POPUP(data: boolean) {
+        this.isShowBookingsOfTablePopup = data;
+    }
+
+    @Mutation
+    MUTATE_IS_SHOW_TABLE_FORM_POP_UP(value: boolean) {
+        this.isShowTableFormPopUp = value;
+    }
+
+    @Mutation
+    MUTATE_TABLE_QUERY_STRING(query: IQueryStringTable) {
+        this.tableQueryString = {
+            ...this.tableQueryString,
+            ...query,
+        };
+    }
+
+    // ACTION
+
+    @Action
+    setTableSelected(data: ITable | null) {
+        this.SET_SELECTED_TABLE(data);
+    }
+
+    @Action
+    setIsShowBookingsOfTablePopup(data: boolean) {
+        this.MUTATE_IS_SHOW_BOOKINGS_OF_TABLE_POPUP(data);
+    }
+
+    @Action
+    setCanChosenTable(data: boolean) {
+        this.SET_CAN_CHOSEN_TABLE(data);
+    }
+
+    @Action
+    clearQueryString() {
+        this.MUTATE_TABLE_QUERY_STRING(initQueryString);
+    }
+
+    @Action
+    setTableQueryString(query: IQueryStringTable) {
+        this.MUTATE_TABLE_QUERY_STRING(query);
+    }
+
+    @Action
+    setIsShowTableFormPopUp(value: boolean) {
+        this.MUTATE_IS_SHOW_TABLE_FORM_POP_UP(value);
+    }
+    // API Table
+
+    @Action
+    async getTables() {
+        const response = (await tableService.getList({
+            ...this.tableQueryString,
+        })) as IBodyResponse<IGetListResponse<ITable>>;
+        if (response.success) {
+            this.MUTATE_TABLES_RESTAURANTS(response?.data?.items || []);
+        } else {
+            this.MUTATE_TABLES_RESTAURANTS([]);
+        }
+        return response;
+    }
+}
+
+export const tableDiagramModule = getModule(TableDiagramModule);
