@@ -3,6 +3,7 @@ export default {
         header: {
             id: 'ID',
             nameMaterial: 'Name Material',
+            theoreticalInventory: 'Theoretical Inventory',
             inventoryQuantity: 'Inventory Quantity',
             unit: 'Unit',
             damagedQuantity: 'Damaged Quantity',

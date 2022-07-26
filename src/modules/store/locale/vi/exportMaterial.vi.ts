@@ -5,6 +5,7 @@ export default {
             exportTime: 'Thời gian nhập kho',
             transporters: 'Nhà vận chuyển',
             warehouseStaff: 'Nhân viên kho',
+            totalPaymentImport: 'Tổng tiền xuất kho',
             status: 'Trạng thái',
             note: 'Ghi chú',
             actions: 'Thao tác',

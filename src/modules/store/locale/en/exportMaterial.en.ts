@@ -20,6 +20,7 @@ export default {
             exportTime: 'Export time',
             transporters: 'Transporters',
             warehouseStaff: 'Warehouse Staff',
+            totalPaymentExport: 'Total payment export',
             status: 'Status',
             note: 'Note',
             actions: 'Actions',

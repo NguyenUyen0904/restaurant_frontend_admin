@@ -1,4 +1,25 @@
 export default {
+    exportMaterialDetailDialog: {
+        titleCreate: 'Create export material detail',
+        titleUpdate: 'Update export material detail',
+        material: 'Material',
+        pricePerUnit: 'Price / Unit',
+        currentQuantity: 'Current quantity',
+        quantity: 'Quantity',
+        totalPrice: 'Total Price : ',
+        note: 'Note',
+        placeholder: {
+            material: 'Select material',
+            pricePerUnit: 'Enter Price / Unit',
+            quantity: 'Enter quantity',
+            note: 'Enter note',
+        },
+        button: {
+            cancel: 'Cancel',
+            submit: 'Submit',
+        },
+    },
+
     exportMaterialDetailTable: {
         header: {
             id: 'ID',

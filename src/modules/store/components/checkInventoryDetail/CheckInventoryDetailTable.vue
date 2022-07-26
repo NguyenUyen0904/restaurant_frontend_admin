@@ -20,6 +20,20 @@
                 </template>
             </el-table-column>
             <el-table-column
+                prop="theoreticalInventory"
+                v-if="isCanApproveStatus"
+                width="200"
+                :label="
+                    $t(
+                        'store.inventoryDetail.inventoryDetailTable.header.theoreticalInventory',
+                    )
+                "
+            >
+                <template #default="scope">
+                    {{ scope.row?.material?.quantity }}
+                </template>
+            </el-table-column>
+            <el-table-column
                 prop="unit"
                 width="150"
                 :label="$t('store.inventoryDetail.inventoryDetailTable.header.unit')"
@@ -128,6 +142,7 @@ import CompIcon from '../../../../components/CompIcon.vue';
 import { StoreMixins } from '../../mixins';
 import { Delete as DeleteIcon, Edit as EditIcon } from '@element-plus/icons-vue';
 import {
+    checkUserHasPermission,
     showErrorNotificationFunction,
     showSuccessNotificationFunction,
 } from '@/utils/helper';
@@ -139,6 +154,7 @@ import { ElLoading } from 'element-plus';
 import { HttpStatus } from '@/common/constants';
 import i18n from '@/plugins/vue-i18n';
 import { AcceptStatus } from '../../constants';
+import { PermissionResources, PermissionActions } from '@/modules/role/constants';
 
 @Options({
     name: 'check-inventory-detail-table-component',
@@ -152,6 +168,12 @@ import { AcceptStatus } from '../../constants';
 export default class CheckInventoryDetailTable extends mixins(StoreMixins) {
     get inventoryDetailList(): IInventoryDetail[] {
         return storeModule.inventoryDetailList;
+    }
+
+    isCanApproveStatus(): boolean {
+        return checkUserHasPermission(storeModule.userPermissionsCheckInventory, [
+            `${PermissionResources.STORE_CHECK_INVENTORY}_${PermissionActions.APPROVE_STATUS}`,
+        ]);
     }
 
     isApprove(status: AcceptStatus): boolean {

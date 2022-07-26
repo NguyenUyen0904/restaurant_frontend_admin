@@ -91,6 +91,9 @@ export default class ImportMaterialDetailPage extends Vue {
     }
 
     created(): void {
+        if (!storeModule.selectedImportMaterial) {
+            this.onBack();
+        }
         storeModule.clearQueryStringImportMaterialDetail();
         this.fetchData();
     }

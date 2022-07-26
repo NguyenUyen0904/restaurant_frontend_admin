@@ -14,7 +14,6 @@
                 :label="
                     $t('store.exportMaterial.exportMaterialTable.header.transporters')
                 "
-                sortable="custom"
             >
                 <template #default="scope">
                     {{ scope.row.transporters }}
@@ -22,6 +21,7 @@
             </el-table-column>
             <el-table-column
                 prop="warehouseStaff"
+                width="250"
                 :label="
                     $t('store.exportMaterial.exportMaterialTable.header.warehouseStaff')
                 "
@@ -47,7 +47,21 @@
                 </template>
             </el-table-column>
             <el-table-column
+                prop="totalPaymentImport"
+                width="250"
+                :label="
+                    $t(
+                        'store.exportMaterial.exportMaterialTable.header.totalPaymentExport',
+                    )
+                "
+            >
+                <template #default="scope">
+                    {{ parseMoney(scope.row.totalPaymentExport | 0) }}
+                </template>
+            </el-table-column>
+            <el-table-column
                 prop="status"
+                width="200"
                 :label="$t('store.exportMaterial.exportMaterialTable.header.status')"
             >
                 <template #default="scope">
@@ -61,6 +75,7 @@
             </el-table-column>
             <el-table-column
                 prop="note"
+                width="250"
                 :label="$t('store.exportMaterial.exportMaterialTable.header.note')"
             >
                 <template #default="scope">
@@ -97,7 +112,7 @@
                             <el-button
                                 type="warning"
                                 size="mini"
-                                @click="onClickUpdateExportMaterial(scope.row.id)"
+                                @click="onClickUpdateExportMaterial(scope.row)"
                             >
                                 <EditIcon class="action-icon" />
                             </el-button>
@@ -161,9 +176,12 @@ export default class ExportMaterialTable extends mixins(StoreMixins) {
         ]);
     }
 
-    onClickUpdateExportMaterial(id: number): void {
-        storeModule.setQueryStringExportMaterialDetail({ exportMaterialId: id });
-        this.$router.push(`/export-material/${id}`);
+    onClickUpdateExportMaterial(exportMaterial: IExportMaterial): void {
+        storeModule.setQueryStringExportMaterialDetail({
+            exportMaterialId: exportMaterial.id,
+        });
+        storeModule.setSelectedExportMaterial(exportMaterial);
+        this.$router.push(`/export-material/${exportMaterial.id}`);
     }
 
     async setStatus(data: IEmitStatus): Promise<void> {

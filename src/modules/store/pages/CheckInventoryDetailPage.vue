@@ -51,6 +51,9 @@ export default class CheckInventoryDetailPage extends Vue {
     }
 
     created(): void {
+        if (!storeModule.selectedCheckInventory) {
+            this.onBack();
+        }
         storeModule.clearQueryStringInventoryDetail();
         this.getInventoryDetailList();
     }

@@ -7,8 +7,10 @@
             v-model:page="selectedPage"
             :totalItems="totalExportMaterialDetails"
             @onPaginate="handlePaginate"
-            :isShowBackButton="false"
+            :isShowBackButton="true"
+            :isShowCreateButton="isCanCreate"
             @on-click-back-button="onBack"
+            @create="onClickButtonCreate"
         >
             <template #sort-box-content>
                 <Sort />
@@ -16,6 +18,9 @@
         </BaseListPageHeader>
         <FilterForm :isToggleFilterForm="isToggleFilterForm" />
         <ExportMaterialDetailTable />
+        <ExportMaterialDetailFormPopup />
+        <ExportMaterialDetailExcelPopup />
+        <ExportMaterialDetailExcelResultPopup />
     </div>
 </template>
 
@@ -26,11 +31,20 @@ import { Options, Vue } from 'vue-class-component';
 import ExportMaterialDetailTable from '../components/exportMaterialDetail/ExportMaterialDetailTable.vue';
 import { storeModule } from '../store';
 import FilterForm from '../components/exportMaterialDetail/FilterForm.vue';
+import { PermissionResources, PermissionActions } from '@/modules/role/constants';
+import { checkUserHasPermission } from '@/utils/helper';
+import { AcceptStatus } from '../constants';
+import ExportMaterialDetailFormPopup from '../components/exportMaterialDetail/ExportMaterialDetailFormPopup.vue';
+import ExportMaterialDetailExcelPopup from '../components/exportMaterialDetail/ExportMaterialDetailExcelPopup.vue';
+import ExportMaterialDetailExcelResultPopup from '../components/exportMaterialDetail/ExportMaterialDetailExcelResultPopup.vue';
 
 @Options({
     components: {
         ExportMaterialDetailTable,
         FilterForm,
+        ExportMaterialDetailFormPopup,
+        ExportMaterialDetailExcelPopup,
+        ExportMaterialDetailExcelResultPopup,
     },
 })
 export default class ExportMaterialDetailPage extends Vue {
@@ -51,8 +65,11 @@ export default class ExportMaterialDetailPage extends Vue {
     }
 
     created(): void {
+        if (!storeModule.selectedExportMaterial) {
+            this.onBack();
+        }
         storeModule.clearQueryStringExportMaterialDetail();
-        this.getExportMaterialDetailList();
+        this.fetchData();
     }
 
     async getExportMaterialDetailList(): Promise<void> {
@@ -72,8 +89,30 @@ export default class ExportMaterialDetailPage extends Vue {
         this.isToggleFilterForm = !this.isToggleFilterForm;
     }
 
+    // check permission
+    get isCanCreate(): boolean {
+        return (
+            checkUserHasPermission(storeModule.userPermissionsExportMaterial, [
+                `${PermissionResources.STORE_EXPORT_MATERIAL}_${PermissionActions.CREATE}`,
+            ]) && storeModule.selectedExportMaterial?.status !== AcceptStatus.APPROVE
+        );
+    }
+
+    onClickButtonCreate(): void {
+        storeModule.setIsShowExportMaterialDetailFormPopUp(true);
+    }
+
     onBack(): void {
         this.$router.push({ name: PageName.STORE_EXPORT_PAGE });
+    }
+
+    async fetchData(): Promise<void> {
+        const loading = ElLoading.service({
+            target: '.content',
+        });
+        this.getExportMaterialDetailList();
+        await storeModule.getMaterials();
+        loading.close();
     }
 }
 </script>

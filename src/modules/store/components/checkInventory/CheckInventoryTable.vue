@@ -85,7 +85,7 @@
                             <el-button
                                 type="warning"
                                 size="mini"
-                                @click="onClickUpdateInventory(scope.row.id)"
+                                @click="onClickUpdateInventory(scope.row)"
                             >
                                 <EditIcon class="action-icon" />
                             </el-button>
@@ -149,11 +149,12 @@ export default class CheckInventoryTable extends mixins(StoreMixins) {
         ]);
     }
 
-    onClickUpdateInventory(id: number): void {
+    onClickUpdateInventory(checkInventory: ICheckInventory): void {
         storeModule.setQueryStringInventoryDetail({
-            checkInventoryId: id,
+            checkInventoryId: checkInventory.id,
         });
-        this.$router.push(`/check-inventory/${id}`);
+        storeModule.setSelectedCheckInventory(checkInventory);
+        this.$router.push(`/check-inventory/${checkInventory.id}`);
     }
 
     async setStatus(data: IEmitStatus): Promise<void> {

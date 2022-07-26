@@ -3,6 +3,7 @@ export default {
         header: {
             id: 'ID',
             nameMaterial: 'Tên nguyên liệu',
+            theoreticalInventory: 'Sơ lượng tồn lý thuyết',
             inventoryQuantity: 'Số lượng hàng tồn',
             unit: 'Đơn vị',
             damagedQuantity: 'Số lượng hỏng',

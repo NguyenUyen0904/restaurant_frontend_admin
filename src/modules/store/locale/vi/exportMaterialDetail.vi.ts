@@ -1,4 +1,25 @@
 export default {
+    exportMaterialDetailDialog: {
+        titleCreate: 'Tạo chi tiết đơn xuất kho',
+        titleUpdate: 'Cập nhật chi tết đơn xuất kho',
+        material: 'Nguyên liệu',
+        pricePerUnit: 'Giá / Đơn vị',
+        currentQuantity: 'Số lượng hiện tại',
+        quantity: 'Số lượng',
+        note: 'Ghi chú',
+        totalPrice: 'Tổng nhập hàng : ',
+        placeholder: {
+            material: 'Chọn nguyên liệu',
+            pricePerUnit: 'Nhập giá / đơn vị',
+            quantity: 'Nhập số lượng',
+            note: 'Nhập ghi chú',
+        },
+        button: {
+            cancel: 'Hủy bỏ',
+            submit: 'Xác nhận',
+        },
+    },
+
     exportMaterialDetailTable: {
         header: {
             id: 'ID',
