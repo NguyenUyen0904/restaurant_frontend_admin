@@ -6,6 +6,8 @@
             :hasSortBox="true"
             v-model:page="selectedPage"
             :totalItems="totalSuppliers"
+            :isShowCreateButton="isCanCreate"
+            @create="onClickButtonCreate"
             @onPaginate="handlePaginate"
         >
             <template #sort-box-content>
@@ -24,6 +26,14 @@ import { Options, Vue } from 'vue-class-component';
 import CheckInventoryTable from '../components/checkInventory/CheckInventoryTable.vue';
 import { storeModule } from '../store';
 import FilterForm from '../components/checkInventory/FilterForm.vue';
+import { PermissionResources, PermissionActions } from '@/modules/role/constants';
+import {
+    checkUserHasPermission,
+    showErrorNotificationFunction,
+    showSuccessNotificationFunction,
+} from '@/utils/helper';
+import { checkInventoryService } from '../services/api.service';
+import i18n from '@/plugins/vue-i18n';
 
 @Options({
     components: {
@@ -48,6 +58,13 @@ export default class CheckInventoryPage extends Vue {
         storeModule.queryStringCheckInventory.page = value;
     }
 
+    // check permission
+    get isCanCreate(): boolean {
+        return checkUserHasPermission(storeModule.userPermissionsCheckInventory, [
+            `${PermissionResources.STORE_CHECK_INVENTORY}_${PermissionActions.CREATE}`,
+        ]);
+    }
+
     created(): void {
         storeModule.clearQueryStringCheckInventory();
         this.getCheckInventoryList();
@@ -68,6 +85,23 @@ export default class CheckInventoryPage extends Vue {
 
     toggleFilterForm(): void {
         this.isToggleFilterForm = !this.isToggleFilterForm;
+    }
+
+    async onClickButtonCreate(): Promise<void> {
+        const loading = ElLoading.service({
+            target: '.import-material-form-popup',
+        });
+        const response = await checkInventoryService.create({});
+        if (response.success) {
+            showSuccessNotificationFunction(
+                i18n.global.t('store.importMaterial.message.create.success'),
+            );
+            await storeModule.getCheckInventories();
+            loading.close();
+        } else {
+            showErrorNotificationFunction(response.message as string);
+            loading.close();
+        }
     }
 }
 </script>

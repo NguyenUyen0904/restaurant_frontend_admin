@@ -1,19 +1,17 @@
 import { importMaterialService } from '../services/api.service';
-import { IImportMaterial, IImportMaterialCreate } from '../types';
+import { IImportMaterialCreate } from '../types';
 import {
     DEFAULT_FIRST_PAGE,
     HttpStatus,
     INPUT_NUMBER_MAX_VALUE,
     INPUT_TEXT_MAX_LENGTH,
 } from '@/common/constants';
-import { IBodyResponse } from '@/common/types';
 import {
     showSuccessNotificationFunction,
     showErrorNotificationFunction,
 } from '@/utils/helper';
 import { ElLoading } from 'element-plus';
 import { useField, useForm } from 'vee-validate';
-import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { storeModule } from '../store';
 import yup from '@/plugins/yup';
@@ -35,7 +33,6 @@ export function initData() {
         note: '',
         supplierId: undefined,
     };
-    const isCreate = computed(() => !storeModule.selectedImportMaterial?.id);
     const { handleSubmit, errors, resetForm, validate } = useForm({
         initialValues: initValues,
         validationSchema: validateImportMaterialSchema,
@@ -47,25 +44,15 @@ export function initData() {
             note: values.note,
             supplierId: values.supplierId,
         } as IImportMaterialCreate;
-        let response;
-        const importMaterialId = storeModule.selectedImportMaterial?.id;
         const loading = ElLoading.service({
             target: '.import-material-form-popup',
         });
-        if (!isCreate.value) {
-            response = await importMaterialService.update(
-                importMaterialId as number,
-                createBody,
-            );
-        } else {
-            response = await importMaterialService.create(createBody);
-        }
+
+        const response = await importMaterialService.create(createBody);
         loading.close();
         if (response.success) {
             showSuccessNotificationFunction(
-                !isCreate.value
-                    ? t('store.importMaterial.message.update.success')
-                    : (t('store.importMaterial.message.create.success') as string),
+                t('store.importMaterial.message.create.success'),
             );
             storeModule.setQueryStringImportMaterial({
                 page: DEFAULT_FIRST_PAGE,
@@ -92,25 +79,9 @@ export function initData() {
     const { value: note } = useField('note');
 
     const openPopup = async () => {
-        if (!isCreate.value) {
-            const loading = ElLoading.service({
-                target: '.import-material-form-popup',
-            });
-            const importMaterialDetail = (await importMaterialService.getDetail(
-                storeModule.selectedImportMaterial?.id || 0,
-            )) as IBodyResponse<IImportMaterial>;
-            loading.close();
-            resetForm({
-                values: {
-                    supplierId: importMaterialDetail.data?.supplierId,
-                    note: importMaterialDetail.data?.note,
-                },
-            });
-        } else {
-            resetForm({
-                values: initValues,
-            });
-        }
+        resetForm({
+            values: initValues,
+        });
     };
     return {
         supplierId,
@@ -120,6 +91,5 @@ export function initData() {
         openPopup,
         onSubmit,
         resetForm,
-        isCreate,
     };
 }

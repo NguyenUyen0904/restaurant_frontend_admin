@@ -60,13 +60,14 @@ export interface ICheckInventory {
     id: number;
     checkTime: string;
     warehouseStaff: IWarehouseStaff;
-    status: string;
+    status: AcceptStatus;
     note: string;
 }
 
 export interface ICheckInventoryUpdate {
-    id: number | undefined;
-    status: string | undefined;
+    id?: number | undefined;
+    note?: string | undefined;
+    status?: AcceptStatus | undefined;
 }
 
 export interface IQueryStringCheckInventory extends IQueryString {
@@ -81,7 +82,15 @@ export interface IInventoryDetail {
     inventoryUnit: string;
     damagedQuantity: number;
     damagedUnit: string;
+    status: AcceptStatus;
     note: string;
+}
+
+export interface IInventoryDetailUpdate {
+    inventoryQuantity?: number | undefined;
+    damagedQuantity?: number | undefined;
+    status?: AcceptStatus | undefined;
+    note?: string | undefined;
 }
 
 export interface IQueryStringInventoryDetail extends IQueryString {
@@ -102,12 +111,14 @@ export interface IImportMaterial {
 
 export interface IImportMaterialCreate {
     supplierId: number | undefined;
-    note: string | undefined;
+    note?: string | undefined;
     status?: AcceptStatus;
 }
 
-export interface IImportMaterialUpdate extends IImportMaterialCreate {
-    id: number | undefined;
+export interface IImportMaterialUpdate {
+    id?: number | undefined;
+    note?: string | undefined;
+    status?: AcceptStatus | undefined;
 }
 
 export interface IQueryStringImportMaterial extends IQueryString {
@@ -166,8 +177,10 @@ export interface IExportMaterialCreate {
     note: string | undefined;
 }
 
-export interface IExportMaterialUpdate extends IExportMaterialCreate {
-    id: number | undefined;
+export interface IExportMaterialUpdate {
+    id?: number | undefined;
+    note?: string | undefined;
+    status?: AcceptStatus | undefined;
 }
 
 export interface IQueryStringExportMaterial extends IQueryString {

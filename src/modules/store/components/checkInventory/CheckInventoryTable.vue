@@ -1,5 +1,5 @@
 <template>
-    <BaseTableLayout :data="checkInventoryList">
+    <BaseTableLayout :data="checkInventoryList" @row-click="onClickRow">
         <template #table-columns>
             <el-table-column
                 align="center"
@@ -41,6 +41,7 @@
                 <template #default="scope">
                     <MenuAcceptStatus
                         :status="scope.row.status"
+                        :canApprove="isCanApproveStatus"
                         :id="scope.row.id"
                         @set-status="setStatus"
                     />
@@ -51,7 +52,19 @@
                 :label="$t('store.checkInventory.checkInventoryTable.header.note')"
             >
                 <template #default="scope">
-                    {{ scope.row.note }}
+                    <div v-if="scope.row.status === AcceptStatus.APPROVE">
+                        {{ parseMoney(scope.row.note) }}
+                    </div>
+                    <BaseInputNumber
+                        v-model:value="scope.row.note"
+                        :placeholder="
+                            $t(
+                                'store.importMaterialDetail.importMaterialDetailTable.placeholder.pricePerUnit',
+                            )
+                        "
+                        @blur="updateCheckInventoryNote"
+                        v-else
+                    />
                 </template>
             </el-table-column>
             <el-table-column
@@ -87,7 +100,7 @@
 <script lang="ts">
 import { mixins, Options } from 'vue-property-decorator';
 
-import { ICheckInventory } from '../../types';
+import { ICheckInventory, ICheckInventoryUpdate } from '../../types';
 import CompIcon from '../../../../components/CompIcon.vue';
 import { StoreMixins } from '../../mixins';
 import { Delete as DeleteIcon, Edit as EditIcon } from '@element-plus/icons-vue';
@@ -119,9 +132,20 @@ export default class CheckInventoryTable extends mixins(StoreMixins) {
         return storeModule.checkInventoryList;
     }
 
+    rowId = 0;
+    onClickRow(rowData: ICheckInventory): void {
+        this.rowId = rowData.id;
+    }
+
     isCanUpdate(): boolean {
         return checkUserHasPermission(storeModule.userPermissionsCheckInventory, [
             `${PermissionResources.STORE_CHECK_INVENTORY}_${PermissionActions.UPDATE}`,
+        ]);
+    }
+
+    isCanApproveStatus(): boolean {
+        return checkUserHasPermission(storeModule.userPermissionsCheckInventory, [
+            `${PermissionResources.STORE_CHECK_INVENTORY}_${PermissionActions.APPROVE_STATUS}`,
         ]);
     }
 
@@ -163,10 +187,49 @@ export default class CheckInventoryTable extends mixins(StoreMixins) {
             }
         }
     }
+
+    async updateCheckInventoryNote(data: string): Promise<void> {
+        await this.updateCheckInventory({
+            note: data ? (data as unknown as string) : '',
+        });
+    }
+
+    async updateCheckInventory(data: ICheckInventoryUpdate): Promise<void> {
+        const loading = ElLoading.service({
+            target: '.content',
+        });
+
+        const response = await checkInventoryService.update(this.rowId, data);
+
+        loading.close();
+        if (response.success) {
+            showSuccessNotificationFunction(
+                i18n.global.t('store.importMaterialDetail.message.update.success'),
+            );
+            const loading = ElLoading.service({
+                target: '.content',
+            });
+            await storeModule.getImportMaterialOrders();
+            loading.close();
+        } else {
+            showErrorNotificationFunction(response.message as string);
+            if (response.code === HttpStatus.ITEM_NOT_FOUND) {
+                const loading = ElLoading.service({
+                    target: '.content',
+                });
+                await storeModule.getImportMaterialOrders();
+                loading.close();
+            }
+        }
+    }
 }
 </script>
 
 <style lang="scss" scoped>
+:deep(.form-group) {
+    margin-bottom: 1px;
+}
+
 .button-group {
     display: flex;
     justify-content: space-around;

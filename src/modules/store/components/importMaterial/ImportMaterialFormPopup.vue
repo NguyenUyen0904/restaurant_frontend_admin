@@ -9,11 +9,7 @@
     >
         <template #title>
             <h3 class="text-left">
-                {{
-                    form.isCreate
-                        ? $t('store.importMaterial.importMaterialDialog.titleCreate')
-                        : $t('store.importMaterial.importMaterialDialog.titleUpdate')
-                }}
+                {{ $t('store.importMaterial.importMaterialDialog.titleCreate') }}
             </h3>
         </template>
         <div class="row">

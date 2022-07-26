@@ -17,10 +17,19 @@
                         'store.exportMaterialDetail.exportMaterialDetailTable.header.nameMaterial',
                     )
                 "
-                sortable="custom"
             >
                 <template #default="scope">
                     {{ scope.row.material.material }}
+                </template>
+            </el-table-column>
+            <el-table-column
+                prop="unit"
+                :label="
+                    $t('store.exportMaterialDetail.exportMaterialDetailTable.header.unit')
+                "
+            >
+                <template #default="scope">
+                    {{ scope.row.material.unit }}
                 </template>
             </el-table-column>
             <el-table-column
@@ -30,7 +39,6 @@
                         'store.exportMaterialDetail.exportMaterialDetailTable.header.pricePerUnit',
                     )
                 "
-                sortable="custom"
             >
                 <template #default="scope">
                     <div v-if="isApprove">{{ parseMoney(scope.row.pricePerUnit) }}</div>
@@ -68,16 +76,6 @@
                         @change="changeDataRow(scope.row.id)"
                         v-else
                     />
-                </template>
-            </el-table-column>
-            <el-table-column
-                prop="unit"
-                :label="
-                    $t('store.exportMaterialDetail.exportMaterialDetailTable.header.unit')
-                "
-            >
-                <template #default="scope">
-                    {{ scope.row.material.unit }}
                 </template>
             </el-table-column>
             <el-table-column
@@ -136,6 +134,10 @@ import MenuAcceptStatus from '@/layouts/components/MenuAcceptStatus.vue';
 export default class ExportMaterialDetailTable extends mixins(StoreMixins) {
     get materialExportList(): IExportMaterialDetail[] {
         return storeModule.exportMaterialDetailList;
+    }
+
+    get isApprove(): boolean {
+        return storeModule.selectedExportMaterial?.status === this.AcceptStatus.APPROVE;
     }
 
     rowId = 0;

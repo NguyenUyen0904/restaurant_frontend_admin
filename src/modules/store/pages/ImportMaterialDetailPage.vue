@@ -1,16 +1,33 @@
 <template>
     <div class="import-material-detail-list">
-        <BaseListPageHeader @toggle-filter-form="toggleFilterForm"
-            :pageTitle="$t('store.importMaterialDetail.pageName')" :hasSortBox="true" v-model:page="selectedPage"
-            :totalItems="totalImportMaterialDetails" @onPaginate="handlePaginate" :isShowBackButton="true"
-            :isShowCreateButton="isCanCreate" @create="onClickButtonCreate" @on-click-back-button="onBack">
+        <BaseListPageHeader
+            @toggle-filter-form="toggleFilterForm"
+            :pageTitle="$t('store.importMaterialDetail.pageName')"
+            :hasSortBox="true"
+            v-model:page="selectedPage"
+            :totalItems="totalImportMaterialDetails"
+            @onPaginate="handlePaginate"
+            :isShowBackButton="true"
+            :isShowCreateButton="isCanCreate"
+            @create="onClickButtonCreate"
+            @on-click-back-button="onBack"
+        >
             <template #sort-box-content>
                 <Sort />
             </template>
             <template #custom-button>
-                <el-tooltip v-if="isCanCreate" :content="$t('user.list.upload.uploadUser')" placement="top">
-                    <el-button :style="{ backgroundImage: `url(${uploadUserImage})` }" size="medium" type="default"
-                        @click="onClickButtonUploadUserFile" class="icon-button" />
+                <el-tooltip
+                    v-if="isCanCreate"
+                    :content="$t('user.list.upload.uploadUser')"
+                    placement="top"
+                >
+                    <el-button
+                        :style="{ backgroundImage: `url(${uploadUserImage})` }"
+                        size="medium"
+                        type="default"
+                        @click="onClickButtonUploadUserFile"
+                        class="icon-button"
+                    />
                 </el-tooltip>
             </template>
         </BaseListPageHeader>
@@ -29,14 +46,15 @@ import { Options, Vue } from 'vue-class-component';
 import { storeModule } from '../store';
 import { PermissionResources, PermissionActions } from '@/modules/role/constants';
 import { checkUserHasPermission } from '@/utils/helper';
-import FilterForm from '../components/ImportMaterialDetail/FilterForm.vue';
-import ImportMaterialDetailTable from '../components/ImportMaterialDetail/ImportMaterialDetailTable.vue';
-import ImportMaterialDetailFormPopup from '../components/ImportMaterialDetail/ImportMaterialDetailFormPopup.vue';
-import ImportMaterialDetailExcelPopup from '../components/ImportMaterialDetail/ImportMaterialDetailExcelPopup.vue';
-import ImportMaterialDetailExcelResultPopup from '../components/ImportMaterialDetail/ImportMaterialDetailExcelResultPopup.vue';
+import FilterForm from '../components/importMaterialDetail/FilterForm.vue';
+import ImportMaterialDetailTable from '../components/importMaterialDetail/ImportMaterialDetailTable.vue';
+import ImportMaterialDetailFormPopup from '../components/importMaterialDetail/ImportMaterialDetailFormPopup.vue';
+import ImportMaterialDetailExcelPopup from '../components/importMaterialDetail/ImportMaterialDetailExcelPopup.vue';
+import ImportMaterialDetailExcelResultPopup from '../components/importMaterialDetail/ImportMaterialDetailExcelResultPopup.vue';
+import { AcceptStatus } from '../constants';
+
 @Options({
     components: {
-
         FilterForm,
         ImportMaterialDetailTable,
         ImportMaterialDetailFormPopup,
@@ -53,9 +71,11 @@ export default class ImportMaterialDetailPage extends Vue {
 
     // check permission
     get isCanCreate(): boolean {
-        return checkUserHasPermission(storeModule.userPermissionsImportMaterial, [
-            `${PermissionResources.STORE_IMPORT_MATERIAL}_${PermissionActions.CREATE}`,
-        ]);
+        return (
+            checkUserHasPermission(storeModule.userPermissionsImportMaterial, [
+                `${PermissionResources.STORE_IMPORT_MATERIAL}_${PermissionActions.CREATE}`,
+            ]) && storeModule.selectedImportMaterial?.status !== AcceptStatus.APPROVE
+        );
     }
 
     get selectedPage(): number {

@@ -1,5 +1,5 @@
 <template>
-    <BaseTableLayout :data="supplierList">
+    <BaseTableLayout :data="supplierList" @row-click="onClickRow">
         <template #table-columns>
             <el-table-column
                 align="center"
@@ -66,6 +66,7 @@
                 <template #default="scope">
                     <MenuAcceptStatus
                         :status="scope.row.status"
+                        :canApprove="isCanApproveStatus"
                         :id="scope.row.id"
                         @set-status="setStatus"
                     />
@@ -77,7 +78,19 @@
                 width="200"
             >
                 <template #default="scope">
-                    {{ scope.row.note }}
+                    <div v-if="scope.row.status === AcceptStatus.APPROVE">
+                        {{ parseMoney(scope.row.note) }}
+                    </div>
+                    <BaseInputNumber
+                        v-model:value="scope.row.note"
+                        :placeholder="
+                            $t(
+                                'store.importMaterialDetail.importMaterialDetailTable.placeholder.note',
+                            )
+                        "
+                        @blur="updateImportMaterialNote"
+                        v-else
+                    />
                 </template>
             </el-table-column>
             <el-table-column
@@ -113,7 +126,7 @@
 <script lang="ts">
 import { mixins, Options } from 'vue-property-decorator';
 
-import { IImportMaterial } from '../../types';
+import { IImportMaterial, IImportMaterialUpdate } from '../../types';
 import CompIcon from '../../../../components/CompIcon.vue';
 import { StoreMixins } from '../../mixins';
 import { Delete as DeleteIcon, Edit as EditIcon } from '@element-plus/icons-vue';
@@ -145,9 +158,20 @@ export default class ImportMaterialTable extends mixins(StoreMixins) {
         return storeModule.importMaterialList;
     }
 
+    rowId = 0;
+    onClickRow(rowData: IImportMaterial): void {
+        this.rowId = rowData.id;
+    }
+
     isCanUpdate(): boolean {
         return checkUserHasPermission(storeModule.userPermissionsImportMaterial, [
             `${PermissionResources.STORE_IMPORT_MATERIAL}_${PermissionActions.UPDATE}`,
+        ]);
+    }
+
+    isCanApproveStatus(): boolean {
+        return checkUserHasPermission(storeModule.userPermissionsImportMaterial, [
+            `${PermissionResources.STORE_IMPORT_MATERIAL}_${PermissionActions.APPROVE_STATUS}`,
         ]);
     }
 
@@ -186,10 +210,48 @@ export default class ImportMaterialTable extends mixins(StoreMixins) {
             }
         }
     }
+
+    async updateImportMaterialNote(data: string): Promise<void> {
+        await this.updateImportMaterial({
+            note: data ? (data as unknown as string) : '',
+        });
+    }
+
+    async updateImportMaterial(data: IImportMaterialUpdate): Promise<void> {
+        const loading = ElLoading.service({
+            target: '.content',
+        });
+
+        const response = await importMaterialService.update(this.rowId, data);
+
+        loading.close();
+        if (response.success) {
+            showSuccessNotificationFunction(
+                i18n.global.t('store.importMaterialDetail.message.update.success'),
+            );
+            const loading = ElLoading.service({
+                target: '.content',
+            });
+            await storeModule.getImportMaterialOrders();
+            loading.close();
+        } else {
+            showErrorNotificationFunction(response.message as string);
+            if (response.code === HttpStatus.ITEM_NOT_FOUND) {
+                const loading = ElLoading.service({
+                    target: '.content',
+                });
+                await storeModule.getImportMaterialOrders();
+                loading.close();
+            }
+        }
+    }
 }
 </script>
 
 <style lang="scss" scoped>
+:deep(.form-group) {
+    margin-bottom: 1px;
+}
 .button-group {
     display: flex;
     justify-content: space-around;

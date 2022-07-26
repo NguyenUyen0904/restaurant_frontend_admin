@@ -122,6 +122,7 @@ const storeMenu: ISidebar = {
             requiredPermissions: [
                 `${PermissionResources.STORE_IMPORT_MATERIAL}_${PermissionActions.READ}`,
                 `${PermissionResources.STORE_IMPORT_MATERIAL}_${PermissionActions.UPDATE}`,
+                `${PermissionResources.STORE_IMPORT_MATERIAL}_${PermissionActions.APPROVE_STATUS}`,
             ],
         },
         {
@@ -132,6 +133,7 @@ const storeMenu: ISidebar = {
             requiredPermissions: [
                 `${PermissionResources.STORE_EXPORT_MATERIAL}_${PermissionActions.READ}`,
                 `${PermissionResources.STORE_EXPORT_MATERIAL}_${PermissionActions.UPDATE}`,
+                `${PermissionResources.STORE_EXPORT_MATERIAL}_${PermissionActions.APPROVE_STATUS}`,
             ],
         },
         {
@@ -142,6 +144,7 @@ const storeMenu: ISidebar = {
             requiredPermissions: [
                 `${PermissionResources.STORE_CHECK_INVENTORY}_${PermissionActions.READ}`,
                 `${PermissionResources.STORE_CHECK_INVENTORY}_${PermissionActions.UPDATE}`,
+                `${PermissionResources.STORE_CHECK_INVENTORY}_${PermissionActions.APPROVE_STATUS}`,
             ],
         },
     ],

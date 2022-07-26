@@ -6,22 +6,29 @@
                 <ArrowDownBoldIcon class="action-icon arrow-down" />
             </div>
             <template #dropdown>
-                <el-dropdown-menu>
-                    <el-dropdown-item @click="setStatus(AcceptStatus.APPROVE)">
-                        {{ $t('common.app.acceptStatus.APPROVE') }}
-                    </el-dropdown-item>
-                    <el-dropdown-item @click="setStatus(AcceptStatus.WAITING_APPROVE)">
-                        {{ $t('common.app.acceptStatus.WAITING_APPROVE') }}
-                    </el-dropdown-item>
-                    <el-dropdown-item
-                        @click="setStatus(AcceptStatus.REQUEST_CHECK_AGAIN)"
-                    >
-                        {{ $t('common.app.acceptStatus.REQUEST_CHECK_AGAIN') }}
-                    </el-dropdown-item>
-                    <el-dropdown-item @click="setStatus(AcceptStatus.CHECKED_AGAIN)">
-                        {{ $t('common.app.acceptStatus.CHECKED_AGAIN') }}
-                    </el-dropdown-item>
-                </el-dropdown-menu>
+                <div v-if="status !== AcceptStatus.APPROVE">
+                    <el-dropdown-menu>
+                        <el-dropdown-item
+                            v-if="canApprove"
+                            @click="setStatus(AcceptStatus.APPROVE)"
+                        >
+                            {{ $t('common.app.acceptStatus.APPROVE') }}
+                        </el-dropdown-item>
+                        <el-dropdown-item
+                            @click="setStatus(AcceptStatus.WAITING_APPROVE)"
+                        >
+                            {{ $t('common.app.acceptStatus.WAITING_APPROVE') }}
+                        </el-dropdown-item>
+                        <el-dropdown-item
+                            @click="setStatus(AcceptStatus.REQUEST_CHECK_AGAIN)"
+                        >
+                            {{ $t('common.app.acceptStatus.REQUEST_CHECK_AGAIN') }}
+                        </el-dropdown-item>
+                        <el-dropdown-item @click="setStatus(AcceptStatus.CHECKED_AGAIN)">
+                            {{ $t('common.app.acceptStatus.CHECKED_AGAIN') }}
+                        </el-dropdown-item>
+                    </el-dropdown-menu>
+                </div>
             </template>
         </el-dropdown>
     </div>
@@ -29,15 +36,17 @@
 
 <script lang="ts">
 import { mixins, Options } from 'vue-class-component';
-import { UtilMixins } from '@/mixins/utilMixins';
 import { AcceptStatus } from '@/modules/store/constants';
 import { Prop } from 'vue-property-decorator';
 import { IEmitStatus } from '@/common/types';
+import { StoreMixins } from '@/modules/store/mixins';
 
 @Options({})
-export default class MenuAcceptStatus extends mixins(UtilMixins) {
+export default class MenuAcceptStatus extends mixins(StoreMixins) {
     @Prop({ default: 0 }) id!: number;
     @Prop({ default: AcceptStatus.APPROVE }) status!: AcceptStatus;
+    @Prop({ default: true }) canApprove!: boolean;
+
     setStatus(status: AcceptStatus): void {
         this.$emit('set-status', {
             id: this.id,

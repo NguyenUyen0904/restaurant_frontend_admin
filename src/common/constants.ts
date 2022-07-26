@@ -127,6 +127,7 @@ export enum HttpStatus {
     ITEM_ALREADY_EXIST = 445,
     ITEM_IS_USING = 446,
     ITEM_IS_INVALID = 448,
+    ITEM_NOT_APPROVE = 449,
     INTERNAL_SERVER_ERROR = 500,
 }
 

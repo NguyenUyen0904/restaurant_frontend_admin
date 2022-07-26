@@ -30,6 +30,7 @@ export enum PermissionActions {
     LOGIN = 'login',
     UPDATE_ROLE = 'update_role',
     CONVERT_MATERIAL = 'convert_material',
+    APPROVE_STATUS = 'approve_status',
 }
 
 export const personalPermissionSuffix = '_personal';
