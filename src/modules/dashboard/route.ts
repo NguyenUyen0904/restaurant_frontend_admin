@@ -18,6 +18,15 @@ export default [
                 name: PageName.DASHBOARD_PAGE,
                 meta: {
                     requiresAuth: true,
+                    breadcrumb: [
+                        {
+                            text: 'common.common.breadcrumb.home',
+                        },
+                        {
+                            text: 'common.common.breadcrumb.dashboard',
+                            link: '/dashboard',
+                        },
+                    ],
                 },
             },
         ],

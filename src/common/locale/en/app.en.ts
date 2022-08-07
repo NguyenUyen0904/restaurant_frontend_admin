@@ -82,6 +82,7 @@ export default {
         edit: 'Edit',
         remove: 'Remove',
         delete: 'Delete',
+        reset: 'Reset',
     },
     notification: 'Notification',
     confirmSaveBox: {
@@ -97,5 +98,20 @@ export default {
         REQUEST_CHECK_AGAIN: 'Request Check Again',
         WAITING_APPROVE: 'Waiting Approve',
         REJECT: 'Reject',
+    },
+
+    month: {
+        january: 'January',
+        february: 'February',
+        march: 'March',
+        april: 'April',
+        may: 'May',
+        june: 'June',
+        july: 'July',
+        august: 'August',
+        september: 'September',
+        october: 'October',
+        november: 'November',
+        december: 'December',
     },
 };
