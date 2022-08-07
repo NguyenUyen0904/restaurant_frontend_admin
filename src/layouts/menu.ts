@@ -3,10 +3,10 @@ import { ISidebar } from '@/common/types';
 import {
     User as UserIcon,
     House as HouseIcon,
-    Key as KeyIcon,
     Calendar as CalendarIcon,
     HomeFilled as HomeFilledIcon,
     Grid as GridIcon,
+    Dish as DishIcon,
 } from '@element-plus/icons-vue';
 import { PermissionActions, PermissionResources } from '@/modules/role/constants';
 // start dashboardGroup
@@ -23,28 +23,64 @@ const dashboard: ISidebar = {
 const userMenu: ISidebar = {
     iconComponent: UserIcon,
     name: 'common.app.menu.user.title',
-    to: '/user',
     active: false,
-    pageName: PageName.USER_PAGE,
-    requiredPermissions: [
-        `${PermissionResources.USER}_${PermissionActions.READ}`,
-        `${PermissionResources.USER}_${PermissionActions.CREATE}`,
-        `${PermissionResources.USER}_${PermissionActions.UPDATE}`,
-        `${PermissionResources.USER}_${PermissionActions.DELETE}`,
+    children: [
+        {
+            name: 'common.app.menu.user.user',
+            to: '/user',
+            active: false,
+            pageName: PageName.USER_PAGE,
+            requiredPermissions: [
+                `${PermissionResources.USER}_${PermissionActions.READ}`,
+                `${PermissionResources.USER}_${PermissionActions.CREATE}`,
+                `${PermissionResources.USER}_${PermissionActions.UPDATE}`,
+                `${PermissionResources.USER}_${PermissionActions.DELETE}`,
+            ],
+        },
+        {
+            name: 'common.app.menu.role.title',
+            active: false,
+            to: '/role',
+            pageName: PageName.ROLE_LIST_PAGE,
+            requiredPermissions: [
+                `${PermissionResources.ROLE}_${PermissionActions.READ}`,
+                `${PermissionResources.ROLE}_${PermissionActions.CREATE}`,
+                `${PermissionResources.ROLE}_${PermissionActions.UPDATE}`,
+                `${PermissionResources.ROLE}_${PermissionActions.DELETE}`,
+            ],
+        },
     ],
 };
 
-const roleMenu: ISidebar = {
-    iconComponent: KeyIcon,
-    name: 'common.app.menu.role.title',
+const menuMenu: ISidebar = {
+    iconComponent: DishIcon,
+    name: 'common.app.menu.menu.title',
     active: false,
-    to: '/role',
-    pageName: PageName.ROLE_LIST_PAGE,
-    requiredPermissions: [
-        `${PermissionResources.ROLE}_${PermissionActions.READ}`,
-        `${PermissionResources.ROLE}_${PermissionActions.CREATE}`,
-        `${PermissionResources.ROLE}_${PermissionActions.UPDATE}`,
-        `${PermissionResources.ROLE}_${PermissionActions.DELETE}`,
+    children: [
+        {
+            name: 'common.app.menu.menu.food',
+            to: '/food',
+            active: false,
+            pageName: PageName.MENU_FOOD_PAGE,
+            requiredPermissions: [
+                `${PermissionResources.MENU_FOOD}_${PermissionActions.READ}`,
+                `${PermissionResources.MENU_FOOD}_${PermissionActions.CREATE}`,
+                `${PermissionResources.MENU_FOOD}_${PermissionActions.UPDATE}`,
+                `${PermissionResources.MENU_FOOD}_${PermissionActions.DELETE}`,
+            ],
+        },
+        {
+            name: 'common.app.menu.menu.category',
+            to: '/category',
+            active: false,
+            pageName: PageName.MENU_CATEGORY_PAGE,
+            requiredPermissions: [
+                `${PermissionResources.MENU_CATEGORY}_${PermissionActions.READ}`,
+                `${PermissionResources.MENU_CATEGORY}_${PermissionActions.CREATE}`,
+                `${PermissionResources.MENU_CATEGORY}_${PermissionActions.UPDATE}`,
+                `${PermissionResources.MENU_CATEGORY}_${PermissionActions.DELETE}`,
+            ],
+        },
     ],
 };
 
@@ -150,4 +186,4 @@ const storeMenu: ISidebar = {
     ],
 };
 
-export const sidebars = [dashboard, userMenu, tableDiagram, booking, storeMenu, roleMenu];
+export const sidebars = [dashboard, userMenu, tableDiagram, booking, storeMenu, menuMenu];

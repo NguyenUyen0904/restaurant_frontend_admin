@@ -10,6 +10,7 @@ export interface IWarehouseStaff {
 export interface IMaterial {
     id: number;
     material: string;
+    limitOver: number;
     unit: string;
     quantity: number;
     updateAt: Date | string;
@@ -17,6 +18,7 @@ export interface IMaterial {
 
 export interface IMaterialCreate {
     material: string | undefined;
+    limitOver: number | undefined;
     unit: string | undefined;
     quantity: number | undefined;
     updateAt: Date | string | undefined;

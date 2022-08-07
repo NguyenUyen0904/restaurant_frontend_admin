@@ -9,6 +9,7 @@ export default {
     },
     material: 'Material',
     quantity: 'Quantity',
+    limitOver: 'Limit Over',
     unit: 'Unit',
 
     materialTable: {
@@ -17,6 +18,7 @@ export default {
             material: 'Material',
             quantity: 'Quantity',
             unit: 'Unit',
+            limitOver: 'Limit Over',
             updateAt: 'Update At',
             actions: 'Actions',
         },
@@ -30,6 +32,7 @@ export default {
         keyword: 'Enter keyword',
         material: 'Enter material',
         quantity: 'Enter quantity',
+        limitOver: 'Enter Limit over',
         unit: 'Enter Unit',
     },
 

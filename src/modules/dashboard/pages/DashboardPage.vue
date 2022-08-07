@@ -71,19 +71,42 @@
                 </div>
             </div>
         </div>
+
+        <div class="col-md-3 timekeeping-card-container">
+            <div class="timekeeping-info">
+                <div class="icon-container material-running-out">
+                    <WarningFilledIcon class="icon" />
+                </div>
+                <div class="detail">
+                    <h5 class="card-title">
+                        {{ $t('dashboard.dashboard.statisticalData.materialRunningOut') }}
+                    </h5>
+                    <span>{{ materialOvers.length }}</span>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="content-wrapper">
         <RevenueChart />
+    </div>
+
+    <div class="content-wrapper">
+        <h4 class="table-label">
+            {{ $t('dashboard.dashboard.statisticalTable.materialRunningOut') }}
+        </h4>
+        <MaterialOverTable :materialList="materialOvers" />
     </div>
 </template>
 
 <script lang="ts">
 import { mixins, Options } from 'vue-class-component';
 import RevenueChart from '../components/RevenueChart.vue';
+import MaterialOverTable from '../components/MaterialOverTable.vue';
 import {
     Lock as LockIcon,
     Money as MoneyIcon,
     List as ListIcon,
+    WarningFilled as WarningFilledIcon,
 } from '@element-plus/icons-vue';
 import { ElLoading } from 'element-plus';
 import { throttle } from 'lodash';
@@ -93,12 +116,22 @@ import { DATE_TIME_FORMAT } from '@/common/constants';
 import moment from 'moment';
 import { IDashboardData } from '../types';
 import { UtilMixins } from '@/mixins/utilMixins';
+import { commonService } from '@/common/services/api.services';
+import { IMaterial } from '@/modules/store/types';
 @Options({
-    components: { RevenueChart, LockIcon, MoneyIcon, ListIcon },
+    components: {
+        RevenueChart,
+        LockIcon,
+        MoneyIcon,
+        ListIcon,
+        WarningFilledIcon,
+        MaterialOverTable,
+    },
 })
 export default class DashboardPage extends mixins(UtilMixins) {
     throttled = throttle(this.createChart, 2000, { trailing: false });
 
+    materialOvers: IMaterial[] = [];
     initData: IDashboardData = {
         importMaterialCount: 0,
         importMaterialTotalPayment: 0,
@@ -108,7 +141,7 @@ export default class DashboardPage extends mixins(UtilMixins) {
 
     dashboardData = this.initData;
 
-    async createChart() {
+    async createChart(): Promise<void> {
         const loading = ElLoading.service({
             target: '.support-request-category-chart',
         });
@@ -127,11 +160,26 @@ export default class DashboardPage extends mixins(UtilMixins) {
             dateRanges,
         });
 
-        if (response.success) {
+        const [dashboardDataResponse, materialResponse] = await Promise.all([
+            dashboardService.getDashboardData({
+                dateRangeType: DateRangeTypes.MONTH,
+                dateRanges,
+            }),
+            await commonService.getDropdownMaterials(),
+        ]);
+
+        if (dashboardDataResponse.success) {
             this.dashboardData = response.data;
         } else {
             this.dashboardData = this.initData;
         }
+
+        if (materialResponse.success) {
+            this.materialOvers = materialResponse.data.items.filter((item) => {
+                return item.quantity < item.limitOver;
+            });
+        }
+
         loading.close();
     }
 
@@ -160,8 +208,7 @@ export default class DashboardPage extends mixins(UtilMixins) {
     margin-bottom: 10px;
 }
 .timekeeping-card-container {
-    padding-left: 10px !important;
-    padding-right: 10px !important;
+    padding: 10px !important;
 }
 .timekeeping-info {
     padding: 20px 12px;
@@ -199,5 +246,16 @@ export default class DashboardPage extends mixins(UtilMixins) {
 .working-hour {
     background-color: #e0e8f3;
     color: #1a55af;
+}
+
+.material-running-out {
+    background-color: #e0e8f3;
+    color: #af1a1a;
+}
+
+.table-label {
+    display: flex;
+    justify-content: start;
+    font-weight: 700;
 }
 </style>

@@ -9,6 +9,10 @@ export default {
         materialRunningOut: 'Materials are running out',
     },
 
+    statisticalTable: {
+        materialRunningOut: 'Materials are running out List',
+    },
+
     StatisticalChart: {
         dateRangeType: {
             day: 'Day',

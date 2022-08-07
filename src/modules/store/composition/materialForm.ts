@@ -20,6 +20,13 @@ import yup from '@/plugins/yup';
 
 const validateMaterialSchema = yup.object({
     material: yup.string().trim().max(INPUT_TEXT_MAX_LENGTH).required(),
+    limitOver: yup
+        .number()
+        .integer()
+        .min(0)
+        .optional()
+        .transform((val) => (isNaN(val) ? null : val))
+        .max(INPUT_NUMBER_MAX_VALUE),
     unit: yup.string().trim().optional().required(),
     quantity: yup
         .number()
@@ -36,6 +43,7 @@ export function initData() {
         material: '',
         unit: '',
         quantity: undefined,
+        limitOver: undefined,
     };
     const isCreate = computed(() => !storeModule.selectedMaterial?.id);
     const { handleSubmit, errors, resetForm, validate } = useForm({
@@ -48,6 +56,7 @@ export function initData() {
             ...values,
             material: values.material?.trim(),
             unit: values.unit,
+            limitOver: values.limitOver,
             quantity: values.quantity,
         } as IMaterialCreate;
         let response;
@@ -90,6 +99,7 @@ export function initData() {
     });
     const { value: material } = useField('material');
     const { value: unit } = useField('unit');
+    const { value: limitOver } = useField('limitOver');
     const { value: quantity } = useField('quantity');
 
     const openPopup = async () => {
@@ -105,6 +115,7 @@ export function initData() {
                 values: {
                     material: materialDetail.data?.material,
                     unit: materialDetail.data?.unit,
+                    limitOver: materialDetail.data?.limitOver,
                     quantity: materialDetail.data?.quantity,
                 },
             });
@@ -118,7 +129,7 @@ export function initData() {
         material,
         unit,
         quantity,
-
+        limitOver,
         errors,
         validate,
         openPopup,

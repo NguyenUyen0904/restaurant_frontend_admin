@@ -9,9 +9,7 @@ export default {
         dashboard: 'Dashboard',
         user: {
             title: 'Human',
-            userManagement: 'User',
-            contractManagement: 'Contract',
-            teamManagement: 'Team',
+            user: 'User',
         },
         role: {
             subtitle: 'Role',
@@ -23,14 +21,10 @@ export default {
         booking: {
             title: 'Booking',
         },
-        store: {
-            title: 'Store',
-            material: 'Material',
-            convert: 'Convert',
-            supplier: 'Supplier',
-            import: 'Import',
-            export: 'Export',
-            checkInventory: 'Check inventory',
+        menu: {
+            title: 'Menu',
+            food: 'Food',
+            category: 'Category',
         },
     },
     menuAccount: {

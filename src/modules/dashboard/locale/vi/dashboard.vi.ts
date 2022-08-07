@@ -9,6 +9,10 @@ export default {
         materialRunningOut: 'Số lượng nguyên liệu sắp hết',
     },
 
+    statisticalTable: {
+        materialRunningOut: 'Danh sách nguyên liệu sắp hết',
+    },
+
     StatisticalChart: {
         dateRangeType: {
             day: 'Ngày',

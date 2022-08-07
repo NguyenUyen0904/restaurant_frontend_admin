@@ -9,9 +9,7 @@ export default {
         dashboard: 'Trang chủ',
         user: {
             title: 'Quản trị nhân sự',
-            userManagement: 'Quản lý người dùng',
-            contractManagement: 'Quản lý hợp đồng',
-            teamManagement: 'Quản lý nhóm',
+            user: 'Quản lý người dùng',
         },
         role: {
             subtitle: 'Vai trò',
@@ -31,6 +29,11 @@ export default {
             import: 'Nhập kho',
             export: 'Xuất kho',
             checkInventory: 'Kiểm kho',
+        },
+        menu: {
+            title: 'Thực đơn',
+            food: 'Món ăn',
+            category: 'Danh mục',
         },
     },
     menuAccount: {

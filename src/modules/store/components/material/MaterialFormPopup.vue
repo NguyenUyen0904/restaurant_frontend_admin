@@ -17,13 +17,21 @@
             </h3>
         </template>
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <BaseInputText
                     v-model:value="form.material"
                     :is-required="true"
                     :placeholder="$t('store.material.placeholder.material')"
                     :label="$t('store.material.material')"
                     :error="translateYupError(form.errors.material)"
+                />
+            </div>
+            <div class="col-md-6">
+                <BaseInputNumber
+                    v-model:value="form.limitOver"
+                    :placeholder="$t('store.material.placeholder.limitOver')"
+                    :label="$t('store.material.limitOver')"
+                    :error="translateYupError(form.errors.limitOver)"
                 />
             </div>
             <div class="col-md-6">

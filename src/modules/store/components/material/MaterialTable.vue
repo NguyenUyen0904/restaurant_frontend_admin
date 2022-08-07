@@ -11,7 +11,7 @@
             <el-table-column
                 prop="material"
                 :label="$t('store.material.materialTable.header.material')"
-                sortable="custom"
+                width="150"
             >
                 <template #default="scope">
                     {{ scope.row.material }}
@@ -20,15 +20,25 @@
             <el-table-column
                 prop="quantity"
                 :label="$t('store.material.materialTable.header.quantity')"
-                sortable="custom"
+                min-width="120"
             >
                 <template #default="scope">
                     {{ scope.row.quantity }}
                 </template>
             </el-table-column>
             <el-table-column
+                prop="limitOver"
+                :label="$t('store.material.materialTable.header.limitOver')"
+                min-width="175"
+            >
+                <template #default="scope">
+                    {{ scope.row.limitOver }}
+                </template>
+            </el-table-column>
+            <el-table-column
                 prop="unit"
                 :label="$t('store.material.materialTable.header.unit')"
+                min-width="120"
             >
                 <template #default="scope">
                     {{ scope.row.unit }}
@@ -37,7 +47,7 @@
             <el-table-column
                 prop="updateAt"
                 :label="$t('store.material.materialTable.header.updateAt')"
-                sortable="custom"
+                width="175"
             >
                 <template #default="scope">
                     {{

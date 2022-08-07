@@ -9,6 +9,7 @@ export default {
     },
     material: 'Nguyên liệu',
     quantity: 'Số lượng',
+    limitOver: 'Giới hạn cảnh báo hết',
     unit: 'Đơn vị đo',
 
     materialTable: {
@@ -17,6 +18,7 @@ export default {
             material: 'Nguyên liệu',
             quantity: 'Số lượng',
             unit: 'Đơn vị đo',
+            limitOver: 'Giới hạn cảnh báo hết',
             updateAt: 'Thời gian cập nhật',
             actions: 'Thao tác',
         },
@@ -30,6 +32,7 @@ export default {
         keyword: 'Nhập từ khóa',
         material: 'Nhập nguyên liệu',
         quantity: 'Nhập số lượng',
+        limitOver: 'Nhập giới hạn cảnh báo hết',
         unit: 'Nhập đơn vị',
     },
 
