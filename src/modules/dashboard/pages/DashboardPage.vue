@@ -1,7 +1,7 @@
 <template>
     <div class="content-wrapper row">
-        <div class="col-md-3 timekeeping-card-container">
-            <div class="timekeeping-info">
+        <div class="col-md-3 dashboard-card-container">
+            <div class="dashboard-info">
                 <div class="icon-container working-hour">
                     <MoneyIcon class="icon" />
                 </div>
@@ -20,8 +20,8 @@
             </div>
         </div>
 
-        <div class="col-md-3 timekeeping-card-container">
-            <div class="timekeeping-info">
+        <div class="col-md-3 dashboard-card-container">
+            <div class="dashboard-info">
                 <div class="icon-container working-hour">
                     <ListIcon class="icon" />
                 </div>
@@ -36,8 +36,8 @@
             </div>
         </div>
 
-        <div class="col-md-3 timekeeping-card-container">
-            <div class="timekeeping-info">
+        <div class="col-md-3 dashboard-card-container">
+            <div class="dashboard-info">
                 <div class="icon-container working-hour">
                     <MoneyIcon class="icon" />
                 </div>
@@ -56,8 +56,8 @@
             </div>
         </div>
 
-        <div class="col-md-3 timekeeping-card-container">
-            <div class="timekeeping-info">
+        <div class="col-md-3 dashboard-card-container">
+            <div class="dashboard-info">
                 <div class="icon-container working-hour">
                     <ListIcon class="icon" />
                 </div>
@@ -72,8 +72,8 @@
             </div>
         </div>
 
-        <div class="col-md-3 timekeeping-card-container">
-            <div class="timekeeping-info">
+        <div class="col-md-3 dashboard-card-container">
+            <div class="dashboard-info">
                 <div class="icon-container material-running-out">
                     <WarningFilledIcon class="icon" />
                 </div>
@@ -207,10 +207,10 @@ export default class DashboardPage extends mixins(UtilMixins) {
 :deep(.form-group) {
     margin-bottom: 10px;
 }
-.timekeeping-card-container {
+.dashboard-card-container {
     padding: 10px !important;
 }
-.timekeeping-info {
+.dashboard-info {
     padding: 20px 12px;
     border-radius: 10px;
     position: relative;
