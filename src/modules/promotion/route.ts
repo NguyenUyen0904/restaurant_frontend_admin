@@ -11,7 +11,7 @@ export default [
         children: [
             {
                 path: '',
-                name: PageName.MENU_CATEGORY_PAGE,
+                name: PageName.PROMOTION_PAGE,
                 component: PromotionPage,
                 meta: {
                     requiresAuth: true,
