@@ -35,6 +35,9 @@ export default {
             food: 'Món ăn',
             category: 'Danh mục',
         },
+        promotion: {
+            title: 'Khuyễn mãi',
+        },
     },
     menuAccount: {
         myProfile: 'Hồ sơ của tôi',
@@ -57,6 +60,7 @@ export default {
         edit: 'Chỉnh sửa',
         detail: 'Chi tiết',
         delete: 'Xóa',
+        convert: 'Chuyển đổi nguyên liệu',
         addRole: 'Thêm vai trò',
     },
     cPanel: {

@@ -21,10 +21,22 @@ export default {
         booking: {
             title: 'Booking',
         },
+        store: {
+            title: 'Warehouse',
+            material: 'Material',
+            convert: 'Convert Material',
+            supplier: 'Supplier',
+            import: 'Import Material',
+            export: 'Export Material',
+            checkInventory: 'Check Inventory',
+        },
         menu: {
             title: 'Menu',
             food: 'Food',
             category: 'Category',
+        },
+        promotion: {
+            title: 'Promotion',
         },
     },
     menuAccount: {
@@ -66,6 +78,7 @@ export default {
         edit: 'Edit',
         detail: 'Detail',
         delete: 'Delete',
+        convert: 'Convert material',
         addRole: 'Add role',
     },
     pageNotFound: 'Oops! Page not found!',

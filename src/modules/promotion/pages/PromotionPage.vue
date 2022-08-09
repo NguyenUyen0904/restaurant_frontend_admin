@@ -1,19 +1,22 @@
 <template>
-    <div class="category-list">
+    <div class="promotion-list">
         <BaseListPageHeader
             @toggle-filter-form="toggleFilterForm"
-            :pageTitle="$t('menu.category.pageName')"
+            :pageTitle="$t('promotion.promotion.pageName')"
             :hasSortBox="true"
             v-model:page="selectedPage"
-            :totalItems="totalCategories"
+            :totalItems="totalPromotions"
             :isShowCreateButton="isCanCreate"
             @create="onClickButtonCreate"
             @onPaginate="handlePaginate"
         >
+            <template #sort-box-content>
+                <Sort />
+            </template>
         </BaseListPageHeader>
         <FilterForm :isToggleFilterForm="isToggleFilterForm" />
-        <CategoryTable />
-        <CategoryFormPopup />
+        <promotion-table />
+        <PromotionFormPopup />
     </div>
 </template>
 
@@ -23,56 +26,56 @@ import { PermissionResources, PermissionActions } from '@/modules/role/constants
 import { checkUserHasPermission } from '@/utils/helper';
 import { ElLoading } from 'element-plus';
 import { Options, Vue } from 'vue-class-component';
-import CategoryTable from '../components/category/CategoryTable.vue';
-import { menuModule } from '../store';
-import CategoryFormPopup from '../components/category/CategoryFormPopup.vue';
-import FilterForm from '../components/category/FilterForm.vue';
+import PromotionTable from '../components/PromotionTable.vue';
+import { promotionModule } from '../store';
+import PromotionFormPopup from '../components/PromotionFormPopup.vue';
+import FilterForm from '../components/FilterForm.vue';
 
 @Options({
     components: {
-        CategoryTable,
+        PromotionTable,
         FilterForm,
-        CategoryFormPopup,
+        PromotionFormPopup,
     },
 })
-export default class CategoryPage extends Vue {
+export default class PromotionPage extends Vue {
     isToggleFilterForm = true;
 
-    get totalCategories(): number {
-        return menuModule.totalCategories;
+    get totalPromotions(): number {
+        return promotionModule.totalPromotions;
     }
 
     // check permission
     get isCanCreate(): boolean {
-        return checkUserHasPermission(menuModule.userPermissionsCategory, [
+        return checkUserHasPermission(promotionModule.userPermissionsPromotion, [
             `${PermissionResources.MENU_CATEGORY}_${PermissionActions.CREATE}`,
         ]);
     }
 
     get selectedPage(): number {
-        return menuModule.categoryQueryString?.page || DEFAULT_FIRST_PAGE;
+        return promotionModule.promotionQueryString?.page || DEFAULT_FIRST_PAGE;
     }
 
     set selectedPage(value: number) {
-        menuModule.categoryQueryString.page = value;
+        promotionModule.promotionQueryString.page = value;
     }
 
     created(): void {
-        menuModule.clearCategoryQueryString();
-        this.getCategoryList();
+        promotionModule.clearPromotionQueryString();
+        this.getPromotionList();
     }
 
-    async getCategoryList(): Promise<void> {
+    async getPromotionList(): Promise<void> {
         const loading = ElLoading.service({
             target: '.content',
         });
-        await menuModule.getCategories();
+        await promotionModule.getPromotions();
         loading.close();
     }
 
     async handlePaginate(): Promise<void> {
-        menuModule.setCategoryQueryString({ page: this.selectedPage });
-        this.getCategoryList();
+        promotionModule.setPromotionQueryString({ page: this.selectedPage });
+        this.getPromotionList();
     }
 
     toggleFilterForm(): void {
@@ -80,7 +83,7 @@ export default class CategoryPage extends Vue {
     }
 
     onClickButtonCreate(): void {
-        menuModule.setIsShowCategoryFormPopUp(true);
+        promotionModule.setIsShowPromotionFormPopUp(true);
     }
 }
 </script>

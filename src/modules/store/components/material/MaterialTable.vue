@@ -71,7 +71,7 @@
                     <div class="button-group">
                         <el-tooltip
                             effect="dark"
-                            :content="$t('store.material.tooltip.edit')"
+                            :content="$t('common.app.tooltip.convert')"
                             placement="top"
                             v-if="isCanConvert"
                         >
@@ -85,7 +85,7 @@
                         </el-tooltip>
                         <el-tooltip
                             effect="dark"
-                            :content="$t('store.material.tooltip.edit')"
+                            :content="$t('common.app.tooltip.edit')"
                             placement="top"
                             v-if="isCanUpdate"
                         >
@@ -99,7 +99,7 @@
                         </el-tooltip>
                         <el-tooltip
                             effect="dark"
-                            :content="$t('store.material.tooltip.delete')"
+                            :content="$t('common.app.tooltip.delete')"
                             placement="top"
                             v-if="isCanDelete"
                         >

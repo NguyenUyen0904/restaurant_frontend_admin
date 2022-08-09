@@ -109,6 +109,20 @@ const booking: ISidebar = {
     ],
 };
 
+const promotion: ISidebar = {
+    iconComponent: CalendarIcon,
+    name: 'common.app.menu.promotion.title',
+    active: false,
+    to: '/promotion',
+    pageName: PageName.PROMOTION_PAGE,
+    requiredPermissions: [
+        `${PermissionResources.PROMOTION}_${PermissionActions.READ}`,
+        `${PermissionResources.PROMOTION}_${PermissionActions.CREATE}`,
+        `${PermissionResources.PROMOTION}_${PermissionActions.UPDATE}`,
+        `${PermissionResources.PROMOTION}_${PermissionActions.DELETE}`,
+    ],
+};
+
 const storeMenu: ISidebar = {
     iconComponent: HomeFilledIcon,
     name: 'common.app.menu.store.title',
@@ -186,4 +200,12 @@ const storeMenu: ISidebar = {
     ],
 };
 
-export const sidebars = [dashboard, userMenu, tableDiagram, booking, storeMenu, menuMenu];
+export const sidebars = [
+    dashboard,
+    userMenu,
+    tableDiagram,
+    booking,
+    storeMenu,
+    menuMenu,
+    promotion,
+];

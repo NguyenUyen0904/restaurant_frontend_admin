@@ -10,13 +10,10 @@
             @create="onClickButtonCreate"
             @onPaginate="handlePaginate"
         >
-            <template #sort-box-content>
-                <Sort />
-            </template>
         </BaseListPageHeader>
         <FilterForm :isToggleFilterForm="isToggleFilterForm" />
-        <food-table />
-        <food-form-popup />
+        <FoodTable />
+        <FoodFormPopup />
     </div>
 </template>
 

@@ -13,8 +13,8 @@
                 <div class="col-md-4 col-sm-12">
                     <BaseInputText
                         v-model:value="filterForm.keyword"
-                        :placeholder="$t('menu.food.placeholder.keyword')"
-                        :label="$t('menu.food.filterForm.keyword')"
+                        :placeholder="$t('promotion.promotion.placeholder.keyword')"
+                        :label="$t('promotion.promotion.filterForm.keyword')"
                     />
                 </div>
             </div>
@@ -31,12 +31,12 @@ import {
     DEFAULT_SIZE_PER_PAGE,
     LIMIT_PER_PAGE,
 } from '@/common/constants';
-import { menuModule } from '../../store';
-import { IQueryStringCategory } from '../../types';
+import { promotionModule } from '../store';
+import { IQueryStringPromotion } from '../types';
 import { Prop, mixins } from 'vue-property-decorator';
-import { MenuMixins } from '../../mixins';
+import { PromotionMixins } from '../mixins';
 
-export default class FilterForm extends mixins(MenuMixins) {
+export default class FilterForm extends mixins(PromotionMixins) {
     @Prop({ default: false }) readonly isToggleFilterForm!: boolean;
 
     filterForm = {
@@ -45,7 +45,7 @@ export default class FilterForm extends mixins(MenuMixins) {
         orderBy: DEFAULT_ORDER_BY,
         orderDirection: DEFAULT_ORDER_DIRECTION,
         keyword: '',
-    } as IQueryStringCategory;
+    } as IQueryStringPromotion;
 
     async resetFilter(): Promise<void> {
         this.filterForm = {
@@ -55,12 +55,12 @@ export default class FilterForm extends mixins(MenuMixins) {
             orderDirection: DEFAULT_ORDER_DIRECTION,
             keyword: '',
         };
-        menuModule.clearCategoryQueryString();
+        promotionModule.clearPromotionQueryString();
         await this.handleFilter();
     }
 
     async handleFilter(): Promise<void> {
-        menuModule.setCategoryQueryString({
+        promotionModule.setPromotionQueryString({
             page: DEFAULT_FIRST_PAGE,
             limit: DEFAULT_SIZE_PER_PAGE,
             keyword: this.filterForm.keyword?.trim(),
@@ -68,7 +68,7 @@ export default class FilterForm extends mixins(MenuMixins) {
         const loading = ElLoading.service({
             target: '.content',
         });
-        await menuModule.getCategories();
+        await promotionModule.getPromotions();
         loading.close();
     }
 }

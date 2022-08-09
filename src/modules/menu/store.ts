@@ -38,7 +38,7 @@ const initFoodQueryString = {
     categories: [],
 };
 
-@Module({ dynamic: true, namespaced: true, store, name: 'category' })
+@Module({ dynamic: true, namespaced: true, store, name: 'menu' })
 class MenuModule extends VuexModule {
     categoryList: Array<ICategory> = [];
     foodList: Array<IFood> = [];
