@@ -70,6 +70,7 @@ export interface ICheckInventoryUpdate {
     id?: number | undefined;
     note?: string | undefined;
     status?: AcceptStatus | undefined;
+    createdAt?: string | undefined;
 }
 
 export interface IQueryStringCheckInventory extends IQueryString {
@@ -121,6 +122,7 @@ export interface IImportMaterialUpdate {
     id?: number | undefined;
     note?: string | undefined;
     status?: AcceptStatus | undefined;
+    createdAt?: string | undefined;
 }
 
 export interface IQueryStringImportMaterial extends IQueryString {
@@ -183,6 +185,7 @@ export interface IExportMaterialUpdate {
     id?: number | undefined;
     note?: string | undefined;
     status?: AcceptStatus | undefined;
+    createdAt?: string | undefined;
 }
 
 export interface IQueryStringExportMaterial extends IQueryString {

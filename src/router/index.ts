@@ -11,6 +11,7 @@ import VueRouteMiddleware, { GLOBAL_MIDDLEWARE_NAME } from './middleware';
 import AuthMiddleware from './middlewares/authMiddleware';
 import { PageName, SpecialPage } from '@/common/constants';
 import ErrorLayout from '@/layouts/ErrorLayout.vue';
+import GuestLayout from '@/layouts/GuestLayout.vue';
 
 const routesModules = getRouteFromModules();
 
@@ -22,6 +23,17 @@ let routes: Array<RouteRecordRaw> = [
         meta: {
             name: SpecialPage.NOT_FOUND,
             requiresAuth: false,
+        },
+    },
+
+    {
+        path: '/guest',
+        component: GuestLayout,
+        name: PageName.GUEST_PAGE,
+        meta: {
+            requiresAuth: false,
+            isPublic: false,
+            isGuest: true,
         },
     },
 ];

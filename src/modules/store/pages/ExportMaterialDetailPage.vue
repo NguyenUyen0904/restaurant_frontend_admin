@@ -2,7 +2,7 @@
     <div class="export-material-detail-list">
         <BaseListPageHeader
             @toggle-filter-form="toggleFilterForm"
-            :pageTitle="$t('store.exportMaterialDetail.pageName')"
+            :pageTitle="$t('store.exportMaterialDetail.pageName', { date: date })"
             :hasSortBox="true"
             v-model:page="selectedPage"
             :totalItems="totalExportMaterialDetails"
@@ -37,6 +37,7 @@ import { AcceptStatus } from '../constants';
 import ExportMaterialDetailFormPopup from '../components/exportMaterialDetail/ExportMaterialDetailFormPopup.vue';
 import ExportMaterialDetailExcelPopup from '../components/exportMaterialDetail/ExportMaterialDetailExcelPopup.vue';
 import ExportMaterialDetailExcelResultPopup from '../components/exportMaterialDetail/ExportMaterialDetailExcelResultPopup.vue';
+import moment from 'moment';
 
 @Options({
     components: {
@@ -96,6 +97,12 @@ export default class ExportMaterialDetailPage extends Vue {
                 `${PermissionResources.STORE_EXPORT_MATERIAL}_${PermissionActions.CREATE}`,
             ]) && storeModule.selectedExportMaterial?.status !== AcceptStatus.APPROVE
         );
+    }
+
+    get date(): string {
+        return moment(storeModule.selectedExportMaterial?.createdAt || '')
+            .utc()
+            .fmFullTimeWithoutSecond();
     }
 
     onClickButtonCreate(): void {

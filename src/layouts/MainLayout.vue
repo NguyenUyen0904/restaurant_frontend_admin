@@ -21,6 +21,8 @@
 </template>
 
 <script lang="ts">
+import { authModule } from '@/modules/auth/store';
+import { appModule } from '@/store/app';
 import { Options, Vue } from 'vue-class-component';
 import Header from './components/Header.vue';
 import Sidebar from './components/Sidebar.vue';
@@ -33,6 +35,11 @@ export default class MainLayout extends Vue {
 
     handleToggleSidebar(isCollapse: boolean): void {
         this.isCollapse = isCollapse;
+    }
+
+    async created(): Promise<void> {
+        await authModule.getProfile();
+        appModule.mutateIsGuestPage(false);
     }
 }
 </script>

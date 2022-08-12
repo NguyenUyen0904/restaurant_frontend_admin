@@ -54,5 +54,5 @@ export default {
         },
     },
 
-    pageName: 'Export Material Detail',
+    pageName: 'Export Material Detail: {date}',
 };

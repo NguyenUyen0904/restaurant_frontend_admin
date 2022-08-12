@@ -86,5 +86,5 @@ export default {
         },
     },
 
-    pageName: 'Import Material Detail',
+    pageName: 'Import Material Detail:      {date}',
 };

@@ -51,5 +51,5 @@ export default {
         },
     },
 
-    pageName: 'Chi tiết nhập kho',
+    pageName: 'Chi tiết nhập kho: {date}',
 };

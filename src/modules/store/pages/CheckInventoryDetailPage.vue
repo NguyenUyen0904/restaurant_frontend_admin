@@ -2,7 +2,7 @@
     <div class="inventory-detail-list">
         <BaseListPageHeader
             @toggle-filter-form="toggleFilterForm"
-            :pageTitle="$t('store.inventoryDetail.pageName')"
+            :pageTitle="$t('store.inventoryDetail.pageName', { date: date })"
             :hasSortBox="true"
             v-model:page="selectedPage"
             :totalItems="totalSuppliers"
@@ -26,6 +26,7 @@ import { Options, Vue } from 'vue-class-component';
 import InventoryDetailTable from '../components/checkInventoryDetail/CheckInventoryDetailTable.vue';
 import { storeModule } from '../store';
 import FilterForm from '../components/checkInventoryDetail/FilterForm.vue';
+import moment from 'moment';
 
 @Options({
     components: {
@@ -48,6 +49,12 @@ export default class CheckInventoryDetailPage extends Vue {
 
     set selectedPage(value: number) {
         storeModule.queryStringInventoryDetail.page = value;
+    }
+
+    get date(): string {
+        return moment(storeModule.selectedCheckInventory?.createdAt || '')
+            .utc()
+            .fmFullTimeWithoutSecond();
     }
 
     created(): void {

@@ -2,7 +2,7 @@
     <div class="import-material-detail-list">
         <BaseListPageHeader
             @toggle-filter-form="toggleFilterForm"
-            :pageTitle="$t('store.importMaterialDetail.pageName')"
+            :pageTitle="$t('store.importMaterialDetail.pageName', { date: date })"
             :hasSortBox="true"
             v-model:page="selectedPage"
             :totalItems="totalImportMaterialDetails"
@@ -52,6 +52,7 @@ import ImportMaterialDetailFormPopup from '../components/importMaterialDetail/Im
 import ImportMaterialDetailExcelPopup from '../components/importMaterialDetail/ImportMaterialDetailExcelPopup.vue';
 import ImportMaterialDetailExcelResultPopup from '../components/importMaterialDetail/ImportMaterialDetailExcelResultPopup.vue';
 import { AcceptStatus } from '../constants';
+import moment from 'moment';
 
 @Options({
     components: {
@@ -88,6 +89,12 @@ export default class ImportMaterialDetailPage extends Vue {
 
     get uploadUserImage(): void {
         return require('@/assets/icons/btn.export.svg');
+    }
+
+    get date(): string {
+        return moment(storeModule.selectedImportMaterial?.createdAt || '')
+            .utc()
+            .fmFullTimeWithoutSecond();
     }
 
     created(): void {

@@ -48,5 +48,5 @@ export default {
         },
     },
 
-    pageName: 'Chi tiết xuất kho',
+    pageName: 'Chi tiết xuất kho: {date}',
 };

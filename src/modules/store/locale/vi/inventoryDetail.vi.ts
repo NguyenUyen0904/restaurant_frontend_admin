@@ -33,5 +33,5 @@ export default {
         },
     },
 
-    pageName: 'Chi tiết kiểm kho',
+    pageName: 'Chi tiết kiểm kho: {date}',
 };

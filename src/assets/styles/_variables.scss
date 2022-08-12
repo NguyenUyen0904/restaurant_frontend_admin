@@ -30,6 +30,15 @@ $candidate-cancel: #c70812;
 $candidate-done: rgb(25, 135, 84);
 $candidate-waiting: #fccf0a;
 
+
+$--main-color: #eaa023;
+$--dark: #0c1023;
+$--dark-light: #191f3a;
+$--white: #ffffff;
+$--white-light: #c8c8c8;
+$--shadow: 0 0 15px rgba(0, 0, 0, 0.25);
+$--cursive-font: "Dancing Script", cursive;
+
 $zIndex: (
     zIndexBase: 1,
     fileUploadInput: 5,

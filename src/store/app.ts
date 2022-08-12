@@ -8,6 +8,7 @@ class AppModule extends VuexModule {
     isShowMobileSidebar = false;
     isShowNetworkError = false;
     selectedLanguage = appService.getLang();
+    isGuestPage = false;
 
     @Action
     toggleMobileSidebar(): void {
@@ -18,7 +19,17 @@ class AppModule extends VuexModule {
     setLanguage(lang: SupportLanguage): void {
         this.SET_LANGUAGE(lang);
     }
+
+    @Action
+    mutateIsGuestPage(value: boolean) {
+        this.MUTATE_IS_GUEST_PAGE(value);
+    }
     // GETTERS
+
+    @Mutation
+    MUTATE_IS_GUEST_PAGE(value: boolean) {
+        this.isGuestPage = value;
+    }
 
     @Mutation
     SET_IS_SHOW_MOBILE_SIDEBAR(value: boolean): void {

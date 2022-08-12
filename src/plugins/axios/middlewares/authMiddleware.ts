@@ -7,6 +7,7 @@ import { HttpStatus, PageName } from '@/common/constants';
 import { ITokenOption } from '@/utils/token';
 import { IBodyResponse } from '@/common/types';
 import { ILoginResponse } from '@/modules/auth/types';
+import { appModule } from '@/store/app';
 
 const logout = () => {
     appService.resetAll();
@@ -50,22 +51,24 @@ const sendRefreshToken = async () => {
 const throttled = throttle(sendRefreshToken, 10000, { trailing: false });
 export default class AuthMiddleware extends HttpMiddleware {
     async onRequest(config: AxiosRequestConfig): Promise<AxiosRequestConfig> {
-        const tokenExpiredAt = +appService.token?.getAccessTokenExpiredAt();
-        if (tokenExpiredAt && tokenExpiredAt <= new Date().getTime()) {
-            // token expired, check refresh token
-            const refreshToken = appService.getTokenOption()?.refreshToken;
-            const refreshTokenExpiredAt =
-                +appService.getTokenOption()?.refreshTokenExpiredAt;
-            if (
-                !refreshToken ||
-                !refreshTokenExpiredAt ||
-                refreshTokenExpiredAt <= new Date().getTime()
-            ) {
-                // refresh token expired
-                logout();
-            } else {
-                // check refresh token ok, call refresh token api
-                await throttled();
+        if (!appModule.isGuestPage) {
+            const tokenExpiredAt = +appService.token?.getAccessTokenExpiredAt();
+            if (tokenExpiredAt && tokenExpiredAt <= new Date().getTime()) {
+                // token expired, check refresh token
+                const refreshToken = appService.getTokenOption()?.refreshToken;
+                const refreshTokenExpiredAt =
+                    +appService.getTokenOption()?.refreshTokenExpiredAt;
+                if (
+                    !refreshToken ||
+                    !refreshTokenExpiredAt ||
+                    refreshTokenExpiredAt <= new Date().getTime()
+                ) {
+                    // refresh token expired
+                    logout();
+                } else {
+                    // check refresh token ok, call refresh token api
+                    await throttled();
+                }
             }
         }
         // set authorization

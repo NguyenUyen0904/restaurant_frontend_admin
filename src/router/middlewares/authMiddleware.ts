@@ -8,11 +8,15 @@ export default async (
     next: NavigationGuardNext,
 ): Promise<void> => {
     const isPublic = to?.meta?.public || false;
+    const isGuest = to?.meta?.isGuest || false;
     const onlyWhenLoggedOut = to?.meta?.onlyWhenLoggedOut || false;
     const loggedIn = !!appService.getTokenOption().accessToken;
     const refreshToken = appService.getTokenOption()?.refreshToken;
     const refreshTokenExpiredAt = +appService.getTokenOption()?.refreshTokenExpiredAt;
 
+    if (isGuest) {
+        return next();
+    }
     if (isPublic) {
         // Do not allow user to visit entry page if they are logged in
         if (loggedIn && onlyWhenLoggedOut) {

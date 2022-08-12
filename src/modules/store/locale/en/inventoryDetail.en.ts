@@ -28,5 +28,5 @@ export default {
         },
     },
 
-    pageName: 'Check Inventory Detail',
+    pageName: 'Check Inventory Detail: {date}',
 };
