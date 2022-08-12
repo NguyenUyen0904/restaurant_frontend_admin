@@ -62,6 +62,7 @@
             </div>
         </section>
         <!-- About-Section-end -->
+
         <!-- Menu-Section-begin -->
         <section class="menu-section section-padding" id="Menu">
             <div class="container-layout">
@@ -100,6 +101,31 @@
             </div>
         </section>
         <!-- Menu-Section-end -->
+
+        <!-- Promotion-Section-start -->
+        <section class="promotion-section section-padding">
+            <div class="container-layout">
+                <div class="row-layout">
+                    <div class="section-title">
+                        <h2 data-title="promotion"></h2>
+                    </div>
+                </div>
+                <div class="row-layout">
+                    <div class="menu-taps">
+                        <div class="row">
+                            <PromotionCard
+                                v-for="item in promotionList"
+                                :key="item.id"
+                                :promotion="item"
+                                class="col-4"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Promotion-Section-end -->
+
         <!-- Testimonis-Section -->
         <section class="testimony section-padding" id="Testimonial">
             <div class="container-layout">
@@ -334,10 +360,13 @@ import { menuModule } from '@/modules/menu/store';
 import { ISelectOptions } from '@/common/types';
 import { ICategoryUpdateBody, IFood } from '@/modules/menu/types';
 import FoodCard from '@/modules/menu/components/food/FoodCard.vue';
+import PromotionCard from '@/modules/promotion/components/PromotionCard.vue';
+import { promotionModule } from '@/modules/promotion/store';
+import { IPromotion } from '@/modules/promotion/types';
 
 @Options({
     name: 'guest-page-component',
-    components: { FoodCard },
+    components: { FoodCard, PromotionCard },
 })
 export default class GuestLayout extends mixins(UtilMixins) {
     get selectedCategory(): ICategoryUpdateBody | null {
@@ -350,6 +379,10 @@ export default class GuestLayout extends mixins(UtilMixins) {
 
     get foodList(): IFood[] {
         return menuModule.foodList;
+    }
+
+    get promotionList(): IPromotion[] {
+        return promotionModule.promotionList;
     }
 
     form = setup(() => initData());
@@ -372,6 +405,7 @@ export default class GuestLayout extends mixins(UtilMixins) {
     created(): void {
         appModule.mutateIsGuestPage(true);
         menuModule.getDropdownCategories();
+        promotionModule.getPromotions();
         this.changeCategory(1);
     }
 

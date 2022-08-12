@@ -1,19 +1,22 @@
 <template>
-    <div class="food-item">
-        <div class="menu-item-title">
-            <img style="width: 150px" :src="food?.foodImg?.url" alt="" />
-            <h3>{{ food.foodName }}</h3>
+    <div class="promotion-item d-flex flex-row">
+        <div class="d-flex flex-row">
+            <img style="width: 120px" :src="require(`../../../assets/images/bg.jpg`)" />
+            <div class="menu-item-title d-flex flex-column ms-3 justify-content-center">
+                <h3 class="fw-bold">{{ promotion.name }}</h3>
+                <h4>{{ promotion.note }}</h4>
+            </div>
         </div>
-        <div class="menu-item-price">{{ parseMoney(food.price) }}</div>
+        <div class="menu-item-price">{{ promotion?.percent || 0 }}%</div>
     </div>
 </template>
 
 <script lang="ts">
 import { mixins, Options, Prop } from 'vue-property-decorator';
 
-import { MenuMixins } from '../../mixins';
 import { Delete as DeleteIcon, Edit as EditIcon } from '@element-plus/icons-vue';
-import { IFood } from '../../types';
+import { UtilMixins } from '@/mixins/utilMixins';
+import { IPromotion } from '../types';
 
 @Options({
     name: 'food-card-component',
@@ -22,23 +25,23 @@ import { IFood } from '../../types';
         EditIcon,
     },
 })
-export default class FoodCard extends mixins(MenuMixins) {
-    @Prop({ default: '' }) readonly food!: IFood;
+export default class PromotionCard extends mixins(UtilMixins) {
+    @Prop({ default: '' }) readonly promotion!: IPromotion;
 }
 </script>
 
 <style lang="scss" scoped>
-.food-item:hover .menu-item-price {
+.promotion-item:hover .menu-item-price {
     color: var(--white);
 }
 
-.food-item {
-    width: 46%;
+.promotion-item {
+    width: 30%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    margin: 2%;
+    margin: 1%;
     background: #e1e1e1;
     border-radius: 10px;
     padding: 10px;

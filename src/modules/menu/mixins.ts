@@ -14,4 +14,13 @@ export class MenuMixins extends mixins(UtilMixins) {
             'recruitment.candidate.info.at',
         )} ${moment(date).fmDayString()}`;
     };
+
+    parseMoney(money: number): string {
+        return money || money === 0
+            ? new Intl.NumberFormat('en-US', {
+                  style: 'currency',
+                  currency: 'VND',
+              }).format(money)
+            : '';
+    }
 }
