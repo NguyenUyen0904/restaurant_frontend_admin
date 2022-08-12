@@ -12,4 +12,11 @@ export default {
     phone: 'Số điện thoại',
     arrivalTime: 'Thời gian tới',
     numberPeople: 'Số người',
+
+    placeholder: {
+        nameCustomer: 'Nhập tên Khách hàng',
+        phone: 'Nhập số điện thoại',
+        arrivalTime: 'Thời gian tới',
+        numberPeople: 'Số người',
+    },
 };

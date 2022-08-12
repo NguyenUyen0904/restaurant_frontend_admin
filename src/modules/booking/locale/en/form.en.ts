@@ -12,4 +12,11 @@ export default {
     phone: 'Phone',
     arrivalTime: 'Arrival Time',
     numberPeople: 'Number People',
+
+    placeholder: {
+        nameCustomer: 'Name Customer',
+        phone: 'Phone',
+        arrivalTime: 'Arrival Time',
+        numberPeople: 'Number People',
+    },
 };

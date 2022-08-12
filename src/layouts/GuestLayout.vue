@@ -72,38 +72,31 @@
                 </div>
                 <div class="row-layout">
                     <div class="menu-taps">
-                        <button
-                            type="button"
-                            class="menu-tap-item active"
-                            data-target="#Lunch"
-                        >
-                            Lunch
-                        </button>
-                        <button type="button" class="menu-tap-item" data-target="#Dinner">
-                            Dinner
-                        </button>
-                        <button type="button" class="menu-tap-item" data-target="#Drinks">
-                            Drinks
-                        </button>
-                        <button
-                            type="button"
-                            class="menu-tap-item"
-                            data-target="#Desserts"
-                        >
-                            Desserts
-                        </button>
+                        <el-scrollbar>
+                            <button
+                                type="button"
+                                class="menu-tap-item"
+                                :class="
+                                    item.value === selectedCategory?.id ? 'active' : ''
+                                "
+                                data-target="#Dinner"
+                                @click="changeCategory(item.value)"
+                                v-for="item in categoryOptions"
+                                :key="item.value"
+                            >
+                                {{ item.label }}
+                            </button>
+                        </el-scrollbar>
+                        <div class="row">
+                            <FoodCard
+                                v-for="item in foodList"
+                                :key="item.id"
+                                :food="item"
+                                class="col-6"
+                            />
+                        </div>
                     </div>
                 </div>
-                <!-- <div class="row-layout menu-tap-content active" id="Lunch">
-                    <food-menu :listFood="getFoods" />
-                </div>
-                <div class="row-layout menu-tap-content" id="Dinner">
-                    <food-menu :listFood="getFoods" />
-                </div>
-                <div class="row-layout menu-tap-content" id="Drinks">
-                    <food-menu :listFood="getFoods" />
-                </div>
-                <div class="row-layout menu-tap-content" id="Desserts"></div> -->
             </div>
         </section>
         <!-- Menu-Section-end -->
@@ -218,61 +211,75 @@
                 </div>
             </div>
         </section>
+
+        <!-- -------------------------------------- -->
+        <!-- start booking -->
+        <!-- -------------------------------------- -->
+
         <section class="testimony section-padding" id="Order">
-            <div class="row">
-                <div class="col-md-6">
-                    <BaseInputText
-                        v-model:value="form.nameCustomer"
-                        :is-required="true"
-                        :placeholder="$t('booking.booking.placeholder.nameCustomer')"
-                        :label="$t('booking.booking.bookingDialog.nameCustomer')"
-                        :error="translateYupError(form.errors.nameCustomer)"
-                    />
-                </div>
-                <div class="col-md-6">
-                    <BaseInputText
-                        v-model:value="form.phone"
-                        :is-required="true"
-                        :error="translateYupError(form.errors.phone)"
-                        :label="$t('booking.booking.bookingDialog.phone')"
-                        :placeholder="$t('booking.booking.placeholder.phone')"
-                    />
-                </div>
-                <div class="col-md-6">
-                    <BaseDatePicker
-                        v-model:value="form.arrivalTime"
-                        :placeholder="$t('booking.booking.placeholder.arrivalTime')"
-                        :label="$t('booking.booking.bookingDialog.arrivalTime')"
-                        :error="translateYupError(form.errors.arrivalTime)"
-                        :is-required="true"
-                        :min-date="new Date()"
-                        :default-value="minEndDate"
-                        :type="'datetime'"
-                        :date-format="YYYY_MM_DD_HYPHEN_HH_MM_COLON"
-                        :value-format="YYYY_MM_DD_HYPHEN_HH_MM_COLON"
-                    />
-                </div>
-                <div class="col-md-6">
-                    <BaseInputNumber
-                        v-model:value="form.numberPeople"
-                        :is-required="true"
-                        :placeholder="$t('booking.booking.placeholder.numberPeople')"
-                        :label="$t('booking.booking.bookingDialog.numberPeople')"
-                        :error="translateYupError(form.errors.numberPeople)"
-                        @change="setNumberPeople"
-                    />
-                </div>
+            <div class="section-title mb-4">
+                <h2 data-title="Đặt bàn Online"></h2>
             </div>
-            <div class="mt-5 d-flex justify-content-center">
-                <el-button
-                    type="primary"
-                    @click="onClickSaveButton"
-                    :disabled="isDisabledSaveButton"
-                >
-                    {{ $t('booking.booking.button.submit') }}
-                </el-button>
+            <div style="width: 30%; margin: 0px auto">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-md-12">
+                        <BaseInputText
+                            v-model:value="form.nameCustomer"
+                            :is-required="true"
+                            :placeholder="$t('booking.form.placeholder.nameCustomer')"
+                            :label="$t('booking.form.nameCustomer')"
+                            :error="translateYupError(form.errors.nameCustomer)"
+                        />
+                    </div>
+                    <div class="col-md-12">
+                        <BaseInputText
+                            v-model:value="form.phone"
+                            :is-required="true"
+                            :error="translateYupError(form.errors.phone)"
+                            :label="$t('booking.form.phone')"
+                            :placeholder="$t('booking.form.placeholder.phone')"
+                        />
+                    </div>
+                    <div class="col-md-12">
+                        <BaseDatePicker
+                            v-model:value="form.arrivalTime"
+                            :placeholder="$t('booking.form.placeholder.arrivalTime')"
+                            :label="$t('booking.form.arrivalTime')"
+                            :error="translateYupError(form.errors.arrivalTime)"
+                            :is-required="true"
+                            :min-date="new Date()"
+                            :default-value="minEndDate"
+                            :type="'datetime'"
+                            :date-format="YYYY_MM_DD_HYPHEN_HH_MM_COLON"
+                            :value-format="YYYY_MM_DD_HYPHEN_HH_MM_COLON"
+                        />
+                    </div>
+                    <div class="col-md-12">
+                        <BaseInputNumber
+                            v-model:value="form.numberPeople"
+                            :is-required="true"
+                            :placeholder="$t('booking.form.placeholder.numberPeople')"
+                            :label="$t('booking.form.numberPeople')"
+                            :error="translateYupError(form.errors.numberPeople)"
+                            @change="setNumberPeople"
+                        />
+                    </div>
+                </div>
+                <div class="mt-5 d-flex justify-content-center">
+                    <el-button
+                        type="primary"
+                        @click="onClickSaveButton"
+                        :disabled="isDisabledSaveButton"
+                    >
+                        {{ $t('booking.form.button.submit') }}
+                    </el-button>
+                </div>
             </div>
         </section>
+        <!-- -------------------------------------- -->
+        <!-- end booking -->
+        <!-- -------------------------------------- -->
+
         <!-- Footer-section -->
         <section class="footer-section" id="Contact">
             <div class="container-layout">
@@ -323,12 +330,28 @@ import { bookingModule } from '@/modules/booking/store';
 import { tableDiagramModule } from '@/modules/table-diagram/store';
 import { appModule } from '@/store/app';
 import { UtilMixins } from '@/mixins/utilMixins';
+import { menuModule } from '@/modules/menu/store';
+import { ISelectOptions } from '@/common/types';
+import { ICategoryUpdateBody, IFood } from '@/modules/menu/types';
+import FoodCard from '@/modules/menu/components/food/FoodCard.vue';
 
 @Options({
     name: 'guest-page-component',
-    components: {},
+    components: { FoodCard },
 })
 export default class GuestLayout extends mixins(UtilMixins) {
+    get selectedCategory(): ICategoryUpdateBody | null {
+        return menuModule.selectedCategory;
+    }
+
+    get categoryOptions(): ISelectOptions[] {
+        return menuModule.categoryOptions;
+    }
+
+    get foodList(): IFood[] {
+        return menuModule.foodList;
+    }
+
     form = setup(() => initData());
 
     async onClickSaveButton(): Promise<void> {
@@ -348,6 +371,8 @@ export default class GuestLayout extends mixins(UtilMixins) {
 
     created(): void {
         appModule.mutateIsGuestPage(true);
+        menuModule.getDropdownCategories();
+        this.changeCategory(1);
     }
 
     setNumberPeople(): void {
@@ -356,6 +381,14 @@ export default class GuestLayout extends mixins(UtilMixins) {
             id: undefined,
             numberPeople: this.form.numberPeople as number,
         });
+    }
+
+    changeCategory(categoryId: number): void {
+        menuModule.setCategorySelected({ id: categoryId });
+        menuModule.setFoodQueryString({
+            categories: [categoryId],
+        });
+        menuModule.getFoods();
     }
 }
 </script>
@@ -372,5 +405,22 @@ export default class GuestLayout extends mixins(UtilMixins) {
         justify-content: space-between;
         align-items: center;
     }
+}
+
+.scrollbar-flex-content-categories {
+    display: flex;
+}
+.scrollbar-demo-item {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 50px;
+    margin: 10px;
+    text-align: center;
+    border-radius: 4px;
+    background: var(--el-color-danger-light-9);
+    color: var(--el-color-danger);
 }
 </style>

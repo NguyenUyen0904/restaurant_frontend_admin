@@ -40,7 +40,8 @@ export const BookingSchema = yup.object({
         .min(0)
         .optional()
         .transform((val) => (isNaN(val) ? null : val))
-        .max(INPUT_NUMBER_MAX_VALUE),
+        .max(INPUT_NUMBER_MAX_VALUE)
+        .required(),
     arrivalTime: yup.string().matches(REGEX.YYYY_MM_DD_HYPHEN_HH_MM_COLON).required(),
 });
 

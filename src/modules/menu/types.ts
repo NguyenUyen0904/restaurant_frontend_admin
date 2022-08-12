@@ -8,8 +8,8 @@ export interface ICategory {
 }
 
 export interface ICategoryCreateBody {
-    name: string | undefined;
-    note: string | undefined;
+    name?: string | undefined;
+    note?: string | undefined;
 }
 
 export interface ICategoryUpdateBody extends ICategoryCreateBody {
