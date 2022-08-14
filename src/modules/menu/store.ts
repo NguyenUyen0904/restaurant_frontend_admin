@@ -212,6 +212,8 @@ class MenuModule extends VuexModule {
     // API Table
     @Action
     async getFoods() {
+        console.log('menu: ', this.foodQueryString);
+        
         const response = (await foodService.getList({
             ...this.foodQueryString,
         })) as IBodyResponse<IGetListResponse<IFood>>;

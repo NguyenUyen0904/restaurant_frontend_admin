@@ -55,6 +55,7 @@ export default {
         cancel: 'Cancel',
         confirm: 'Confirm',
         save: 'Save',
+        ok:'OK',
     },
     cPanel: {
         page: 'Page',

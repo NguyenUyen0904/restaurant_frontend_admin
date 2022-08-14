@@ -23,13 +23,13 @@
                     :is-required="true"
                     :placeholder="$t('booking.list.placeholder.nameCustomer')"
                     :label="$t('booking.form.nameCustomer')"
-                    :error="translateYupError(form.errors.nameCustomer)"
+                    :error="translateYupError(form.errors.nameCustomer || '')"
                 />
             </div>
             <div class="col-md-6">
                 <BaseInputText
                     v-model:value="form.phone"
-                    :error="translateYupError(form.errors.phone)"
+                    :error="translateYupError(form.errors.phone || '')"
                     :is-required="true"
                     :label="$t('booking.form.phone')"
                     :placeholder="$t('booking.list.placeholder.phone')"
@@ -40,7 +40,7 @@
                     v-model:value="form.numberPeople"
                     :placeholder="$t('booking.list.placeholder.numberPeople')"
                     :label="$t('booking.form.numberPeople')"
-                    :error="translateYupError(form.errors.numberPeople)"
+                    :error="translateYupError(form.errors.numberPeople || '')"
                     @change="setNumberPeople"
                 />
             </div>
@@ -49,10 +49,9 @@
                     v-model:value="form.arrivalTime"
                     :placeholder="$t('booking.list.placeholder.arrivalTime')"
                     :label="$t('booking.form.arrivalTime')"
-                    :error="translateYupError(form.errors.arrivalTime)"
+                    :error="translateYupError(form.errors.arrivalTime || '')"
                     :is-required="true"
                     :min-date="new Date()"
-                    :default-value="minEndDate"
                     :type="'datetime'"
                     :date-format="YYYY_MM_DD_HYPHEN_HH_MM_COLON"
                     :value-format="YYYY_MM_DD_HYPHEN_HH_MM_COLON"

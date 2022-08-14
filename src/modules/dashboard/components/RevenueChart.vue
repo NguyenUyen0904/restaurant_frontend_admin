@@ -43,7 +43,7 @@
                     {{ $t('common.app.filterForm.reset') }}
                 </el-button>
                 <el-button size="mini" type="primary" @click="handleFilter">
-                    {{ createButtonText || $t('common.app.filterForm.search') }}
+                    {{ $t('common.app.filterForm.search') }}
                 </el-button>
             </div>
         </div>

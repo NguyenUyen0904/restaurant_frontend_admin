@@ -14,7 +14,7 @@
                 sortable="custom"
             >
                 <template #default="scope">
-                    {{ scope.row.foodName }}
+                    {{ scope.row?.foodName || ''}}
                 </template>
             </el-table-column>
             <el-table-column
@@ -23,7 +23,7 @@
                 sortable="custom"
             >
                 <template #default="scope">
-                    {{ parseMoney(scope.row.price) }}
+                    {{ parseMoney(scope.row?.price || '') }}
                 </template>
             </el-table-column>
             <el-table-column
@@ -31,7 +31,7 @@
                 :label="$t('menu.food.foodTable.header.category')"
             >
                 <template #default="scope">
-                    {{ scope.row.category.name }}
+                    {{ scope.row?.category?.name || '' }}
                 </template>
             </el-table-column>
             <el-table-column
@@ -47,7 +47,7 @@
                             effect="dark"
                             :content="$t('common.app.tooltip.edit')"
                             placement="top"
-                            v-if="isCanUpdate(scope.row?.status)"
+                            v-if="isCanUpdate()"
                         >
                             <el-button
                                 type="warning"
@@ -61,7 +61,7 @@
                             effect="dark"
                             :content="$t('common.app.tooltip.delete')"
                             placement="top"
-                            v-if="isCanDelete(scope.row?.status)"
+                            v-if="isCanDelete()"
                         >
                             <el-button
                                 type="danger"

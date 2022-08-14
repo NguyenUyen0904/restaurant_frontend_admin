@@ -2,7 +2,7 @@
     <div class="promotion-item d-flex flex-row">
         <div class="d-flex flex-row">
             <img style="width: 120px" :src="require(`../../../assets/images/bg.jpg`)" />
-            <div class="menu-item-title d-flex flex-column ms-3 justify-content-center">
+            <div class="promotion-item-title d-flex flex-column ms-3 justify-content-center">
                 <h3 class="fw-bold">{{ promotion.name }}</h3>
                 <h4>{{ promotion.note }}</h4>
             </div>
@@ -47,9 +47,12 @@ export default class PromotionCard extends mixins(UtilMixins) {
     padding: 10px;
     color: #000000;
     font-weight: 700 !important;
-    .menu-item-title {
+    .promotion-item-title {
         display: flex;
         align-items: center;
+        border-right: solid 1px #af9292;
+        margin-right: 10px;
+    
         img {
             max-width: 100x;
             margin-right: 15px;
@@ -65,6 +68,7 @@ export default class PromotionCard extends mixins(UtilMixins) {
         font-size: 16px;
         color: var(--main-color);
         transition: all 0.5s ease;
+        font-size: 20px;
     }
 }
 </style>

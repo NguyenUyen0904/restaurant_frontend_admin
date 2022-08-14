@@ -149,13 +149,7 @@
                             Một trong những nhà hàng ngon nhất tôi từng đến và thưởng
                             thức. Hương vị của từng món ăn rất đậm đà, lưu luyến.
                         </p>
-                        <div class="rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
+                       
                     </div>
                     <div class="testimony-item">
                         <div class="testimony-author">
@@ -171,13 +165,7 @@
                             Một trong những nhà hàng ngon nhất tôi từng đến và thưởng
                             thức. Hương vị của từng món ăn rất đậm đà, lưu luyến.
                         </p>
-                        <div class="rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
+                        
                     </div>
                     <div class="testimony-item">
                         <div class="testimony-author">
@@ -193,13 +181,7 @@
                             Một trong những nhà hàng ngon nhất tôi từng đến và thưởng
                             thức. Hương vị của từng món ăn rất đậm đà, lưu luyến.
                         </p>
-                        <div class="rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -254,14 +236,14 @@
                             :is-required="true"
                             :placeholder="$t('booking.form.placeholder.nameCustomer')"
                             :label="$t('booking.form.nameCustomer')"
-                            :error="translateYupError(form.errors.nameCustomer)"
+                            :error="translateYupError(form.errors.nameCustomer || '')"
                         />
                     </div>
                     <div class="col-md-12">
                         <BaseInputText
                             v-model:value="form.phone"
                             :is-required="true"
-                            :error="translateYupError(form.errors.phone)"
+                            :error="translateYupError(form.errors.phone || '')"
                             :label="$t('booking.form.phone')"
                             :placeholder="$t('booking.form.placeholder.phone')"
                         />
@@ -271,10 +253,9 @@
                             v-model:value="form.arrivalTime"
                             :placeholder="$t('booking.form.placeholder.arrivalTime')"
                             :label="$t('booking.form.arrivalTime')"
-                            :error="translateYupError(form.errors.arrivalTime)"
+                            :error="translateYupError(form.errors.arrivalTime|| '')"
                             :is-required="true"
                             :min-date="new Date()"
-                            :default-value="minEndDate"
                             :type="'datetime'"
                             :date-format="YYYY_MM_DD_HYPHEN_HH_MM_COLON"
                             :value-format="YYYY_MM_DD_HYPHEN_HH_MM_COLON"
@@ -286,7 +267,7 @@
                             :is-required="true"
                             :placeholder="$t('booking.form.placeholder.numberPeople')"
                             :label="$t('booking.form.numberPeople')"
-                            :error="translateYupError(form.errors.numberPeople)"
+                            :error="translateYupError(form.errors.numberPeople|| '')"
                             @change="setNumberPeople"
                         />
                     </div>
@@ -295,7 +276,6 @@
                     <el-button
                         type="primary"
                         @click="onClickSaveButton"
-                        :disabled="isDisabledSaveButton"
                     >
                         {{ $t('booking.form.button.submit') }}
                     </el-button>
@@ -388,10 +368,8 @@ export default class GuestLayout extends mixins(UtilMixins) {
     form = setup(() => initData());
 
     async onClickSaveButton(): Promise<void> {
-        bookingModule.setIsDisabledSaveButton(true);
         await this.form.onSubmit();
         bookingModule.setSelectedBooking(null);
-        bookingModule.setIsDisabledSaveButton(false);
     }
 
     beforeDestroy(): void {
@@ -402,11 +380,11 @@ export default class GuestLayout extends mixins(UtilMixins) {
         (this.form.resetForm as () => void)();
     }
 
-    created(): void {
+    async created(): Promise<void> {
         appModule.mutateIsGuestPage(true);
-        menuModule.getDropdownCategories();
         promotionModule.getPromotions();
-        this.changeCategory(1);
+        await menuModule.getDropdownCategories();
+        await this.changeCategory(menuModule.categoryOptions[0].value as number);
     }
 
     setNumberPeople(): void {
@@ -417,12 +395,14 @@ export default class GuestLayout extends mixins(UtilMixins) {
         });
     }
 
-    changeCategory(categoryId: number): void {
+    async changeCategory(categoryId: number): Promise<void> {
         menuModule.setCategorySelected({ id: categoryId });
         menuModule.setFoodQueryString({
             categories: [categoryId],
         });
-        menuModule.getFoods();
+        console.log(menuModule.foodQueryString);
+        
+        await menuModule.getFoods();
     }
 }
 </script>

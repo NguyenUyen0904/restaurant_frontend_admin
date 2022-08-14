@@ -94,14 +94,14 @@ export async function showAlertMessageFunction(
 ): Promise<MessageBoxData> {
     const confirmButtonText =
         options?.confirmButtonText ||
-        (i18n.global.t('common.app.buttons.delete') as string);
+        (i18n.global.t('common.app.buttons.ok') as string);
     const cancelButtonText =
         options?.cancelButtonText ||
         (i18n.global.t('common.app.buttons.cancel') as string);
     const confirmButtonClass = options?.confirmButtonClass || 'el-button--danger';
     const cancelButtonClass = options?.cancelButtonClass || 'el-button--default';
     const distinguishCancelAndClose = options?.distinguishCancelAndClose || true;
-    const type = options?.type || 'error';
+    const type = options?.type || 'warning';
     const showCancelButton = options?.showCancelButton || false;
     return await ElMessageBox.alert(
         message,

@@ -23,7 +23,7 @@
                     :is-required="true"
                     :placeholder="$t('promotion.promotion.placeholder.name')"
                     :label="$t('promotion.promotion.promotionPopup.name')"
-                    :error="translateYupError(form.errors.name)"
+                    :error="translateYupError(form.errors.name|| '')"
                 />
             </div>
             <div class="col-md-6">
@@ -32,13 +32,13 @@
                     :is-required="true"
                     :placeholder="$t('promotion.promotion.placeholder.percent')"
                     :label="$t('promotion.promotion.promotionPopup.percent')"
-                    :error="translateYupError(form.errors.percent)"
+                    :error="translateYupError(form.errors.percent || '')"
                 />
             </div>
             <div class="col-md-6">
                 <BaseInputText
                     v-model:value="form.note"
-                    :error="translateYupError(form.errors.note)"
+                    :error="translateYupError(form.errors.note || '')"
                     :label="$t('promotion.promotion.promotionPopup.note')"
                     :placeholder="$t('promotion.promotion.placeholder.note')"
                 />

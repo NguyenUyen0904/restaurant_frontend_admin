@@ -5,6 +5,7 @@ import { IBodyResponse } from '@/common/types';
 import {
     showSuccessNotificationFunction,
     showErrorNotificationFunction,
+    showAlertMessageFunction,
 } from '@/utils/helper';
 import { ElLoading } from 'element-plus';
 import moment from 'moment';
@@ -15,6 +16,7 @@ import { useI18n } from 'vue-i18n';
 import { BookingSchema } from '../constants';
 import { bookingModule } from '../store';
 import { bookingService } from '../services/api.service';
+import { appModule } from '@/store/app';
 
 export const validateBookingSchema = BookingSchema;
 
@@ -53,6 +55,7 @@ export function initData() {
         }
         loading.close();
         if (response.success) {
+            appModule.isGuestPage?showAlertMessageFunction("Quý khách vui lòng sắp xếp thời gian đến đúng giờ đã đặt. Quá 15 phút, đơn đặt bàn sẽ tự động hủy!"):
             showSuccessNotificationFunction(
                 !isCreate.value
                     ? t('booking.list.message.update.success')

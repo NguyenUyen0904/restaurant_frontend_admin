@@ -55,6 +55,8 @@ export default {
         cancel: 'Hủy',
         confirm: 'Xác nhận',
         save: 'Lưu',
+        ok:'OK',
+
     },
     tooltip: {
         edit: 'Chỉnh sửa',

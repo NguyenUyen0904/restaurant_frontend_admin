@@ -34,15 +34,16 @@
                     :is-required="true"
                     :placeholder="$t('menu.food.placeholder.foodName')"
                     :label="$t('menu.food.foodPopup.foodName')"
-                    :error="translateYupError(form.errors.foodName)"
+                    :error="translateYupError(form.errors.foodName || '')"
                 />
             </div>
             <div class="col-md-6">
                 <BaseInputNumber
                     v-model:value="form.price"
+                    is-required="true"
                     :placeholder="$t('menu.food.placeholder.price')"
                     :label="$t('menu.food.foodPopup.price')"
-                    :error="translateYupError(form.errors.price)"
+                    :error="translateYupError(form.errors.price || '')"
                 />
             </div>
             <div class="col-md-6">
@@ -53,7 +54,7 @@
                     :label="$t('menu.food.foodPopup.category')"
                     :placeholder="$t('menu.food.placeholder.category')"
                     name="category"
-                    :error="translateYupError(form.errors.categoryId)"
+                    :error="translateYupError(form.errors.categoryId || '')"
                 />
             </div>
         </div>
