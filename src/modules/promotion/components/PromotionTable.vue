@@ -39,7 +39,6 @@
                 :label="$t('promotion.promotion.promotionTable.header.status')"
             >
                 <template #default="scope">
-                    {{ scope.row.note }}
                     <div class="accept-status-select">
                         <el-dropdown trigger="click">
                             <div
