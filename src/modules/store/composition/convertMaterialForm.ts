@@ -65,7 +65,7 @@ const validateConvertMaterialSchema = yup.object({
         .optional()
         .transform((val) => (isNaN(val) ? null : val))
         .max(INPUT_NUMBER_MAX_VALUE),
-    note: yup.string().trim().max(INPUT_TEXT_MAX_LENGTH).required(),
+    note: yup.string().trim().max(INPUT_TEXT_MAX_LENGTH),
 });
 
 export function initData() {

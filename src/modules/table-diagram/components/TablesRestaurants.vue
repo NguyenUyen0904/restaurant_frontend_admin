@@ -119,7 +119,7 @@ export default class TablesRestaurants extends mixins(TableMixins) {
         return bookingModule.selectedBooking;
     }
 
-    isCanUpdate(): boolean {
+    get isCanUpdate(): boolean {
         return checkUserHasPermission(tableDiagramModule.userPermissionsTable, [
             `${PermissionResources.TABLE_DIAGRAM}_${PermissionActions.UPDATE}`,
         ]);

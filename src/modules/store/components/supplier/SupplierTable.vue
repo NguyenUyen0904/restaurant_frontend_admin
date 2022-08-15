@@ -122,13 +122,13 @@ export default class SupplierTable extends mixins(StoreMixins) {
         return storeModule.supplierList;
     }
 
-    isCanDelete(): boolean {
+    get isCanDelete(): boolean {
         return checkUserHasPermission(storeModule.userPermissionsSupplier, [
             `${PermissionResources.STORE_SUPPLIER}_${PermissionActions.DELETE}`,
         ]);
     }
 
-    isCanUpdate(): boolean {
+    get isCanUpdate(): boolean {
         return checkUserHasPermission(storeModule.userPermissionsSupplier, [
             `${PermissionResources.STORE_SUPPLIER}_${PermissionActions.UPDATE}`,
         ]);

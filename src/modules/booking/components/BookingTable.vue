@@ -100,7 +100,10 @@
                     <div class="booking__table__action">
                         <div
                             class="booking-done"
-                            v-if="scope.row.status == BookingStatus.WAITING"
+                            v-if="
+                                scope.row.status == BookingStatus.WAITING &&
+                                scope.row.tablesRestaurant
+                            "
                         >
                             <el-popconfirm
                                 confirm-button-text="Yes"

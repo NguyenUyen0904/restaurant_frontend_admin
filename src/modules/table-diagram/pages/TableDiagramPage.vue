@@ -37,7 +37,7 @@ export default class TableDiagramPage extends Vue {
         return tableDiagramModule.tableList || [];
     }
 
-    isCanCreate(): boolean {
+    get isCanCreate(): boolean {
         return checkUserHasPermission(tableDiagramModule.userPermissionsTable, [
             `${PermissionResources.TABLE_DIAGRAM}_${PermissionActions.CREATE}`,
         ]);

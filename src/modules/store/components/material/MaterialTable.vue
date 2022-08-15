@@ -151,19 +151,19 @@ export default class MaterialTable extends mixins(StoreMixins) {
         return storeModule.materialList;
     }
 
-    isCanConvert(): boolean {
+    get isCanConvert(): boolean {
         return checkUserHasPermission(storeModule.userPermissionsMaterial, [
             `${PermissionResources.STORE_MATERIAL}_${PermissionActions.CONVERT_MATERIAL}`,
         ]);
     }
 
-    isCanDelete(): boolean {
+    get isCanDelete(): boolean {
         return checkUserHasPermission(storeModule.userPermissionsMaterial, [
             `${PermissionResources.STORE_MATERIAL}_${PermissionActions.DELETE}`,
         ]);
     }
 
-    isCanUpdate(): boolean {
+    get isCanUpdate(): boolean {
         return checkUserHasPermission(storeModule.userPermissionsMaterial, [
             `${PermissionResources.MENU_CATEGORY}_${PermissionActions.UPDATE}`,
         ]);

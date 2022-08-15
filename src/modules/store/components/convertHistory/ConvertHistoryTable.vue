@@ -143,7 +143,7 @@ export default class ExportMaterialTable extends mixins(StoreMixins) {
         return storeModule.convertHistoryList;
     }
 
-    isCanUpdate(): boolean {
+    get isCanUpdate(): boolean {
         return checkUserHasPermission(storeModule.userPermissionsConvert, [
             `${PermissionResources.STORE_CONVERT}_${PermissionActions.UPDATE}`,
         ]);

@@ -163,13 +163,13 @@ export default class ImportMaterialTable extends mixins(StoreMixins) {
         this.rowId = rowData.id;
     }
 
-    isCanUpdate(): boolean {
+    get isCanUpdate(): boolean {
         return checkUserHasPermission(storeModule.userPermissionsImportMaterial, [
             `${PermissionResources.STORE_IMPORT_MATERIAL}_${PermissionActions.UPDATE}`,
         ]);
     }
 
-    isCanApproveStatus(): boolean {
+    get isCanApproveStatus(): boolean {
         return checkUserHasPermission(storeModule.userPermissionsImportMaterial, [
             `${PermissionResources.STORE_IMPORT_MATERIAL}_${PermissionActions.APPROVE_STATUS}`,
         ]);

@@ -137,13 +137,13 @@ export default class CheckInventoryTable extends mixins(StoreMixins) {
         this.rowId = rowData.id;
     }
 
-    isCanUpdate(): boolean {
+    get isCanUpdate(): boolean {
         return checkUserHasPermission(storeModule.userPermissionsCheckInventory, [
             `${PermissionResources.STORE_CHECK_INVENTORY}_${PermissionActions.UPDATE}`,
         ]);
     }
 
-    isCanApproveStatus(): boolean {
+    get isCanApproveStatus(): boolean {
         return checkUserHasPermission(storeModule.userPermissionsCheckInventory, [
             `${PermissionResources.STORE_CHECK_INVENTORY}_${PermissionActions.APPROVE_STATUS}`,
         ]);

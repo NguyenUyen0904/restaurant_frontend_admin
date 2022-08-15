@@ -14,7 +14,7 @@
                 sortable="custom"
             >
                 <template #default="scope">
-                    {{ scope.row?.foodName || ''}}
+                    {{ scope.row?.foodName || '' }}
                 </template>
             </el-table-column>
             <el-table-column
@@ -110,13 +110,13 @@ export default class MaterialTable extends mixins(MenuMixins) {
         menuModule.getFoods();
     }
 
-    isCanDelete(): boolean {
+    get isCanDelete(): boolean {
         return checkUserHasPermission(menuModule.userPermissionsFood, [
             `${PermissionResources.MENU_FOOD}_${PermissionActions.DELETE}`,
         ]);
     }
 
-    isCanUpdate(): boolean {
+    get isCanUpdate(): boolean {
         return checkUserHasPermission(menuModule.userPermissionsFood, [
             `${PermissionResources.MENU_FOOD}_${PermissionActions.UPDATE}`,
         ]);

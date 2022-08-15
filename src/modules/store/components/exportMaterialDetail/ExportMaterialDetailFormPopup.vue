@@ -142,7 +142,7 @@
 
 <script lang="ts">
 import { setup } from 'vue-class-component';
-import { initData } from '../../composition/importMaterialDetail';
+import { initData } from '../../composition/exportMaterialDetail';
 import { storeModule } from '../../store';
 import { UtilMixins } from '@/mixins/utilMixins';
 import { mixins, Options } from 'vue-property-decorator';

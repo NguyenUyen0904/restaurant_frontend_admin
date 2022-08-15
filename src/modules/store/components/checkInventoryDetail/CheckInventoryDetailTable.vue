@@ -170,7 +170,7 @@ export default class CheckInventoryDetailTable extends mixins(StoreMixins) {
         return storeModule.inventoryDetailList;
     }
 
-    isCanApproveStatus(): boolean {
+    get isCanApproveStatus(): boolean {
         return checkUserHasPermission(storeModule.userPermissionsCheckInventory, [
             `${PermissionResources.STORE_CHECK_INVENTORY}_${PermissionActions.APPROVE_STATUS}`,
         ]);

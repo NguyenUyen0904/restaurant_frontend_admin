@@ -144,6 +144,7 @@ import { IEmitStatus } from '@/common/types';
 import i18n from '@/plugins/vue-i18n';
 import { ElLoading } from 'element-plus';
 import MenuAcceptStatus from '@/layouts/components/MenuAcceptStatus.vue';
+import { AcceptStatus } from '../../constants';
 
 @Options({
     name: 'import-material-table-component',
@@ -164,13 +165,15 @@ export default class ExportMaterialTable extends mixins(StoreMixins) {
         this.rowId = rowData.id;
     }
 
-    isCanUpdate(): boolean {
-        return checkUserHasPermission(storeModule.userPermissionsExportMaterial, [
-            `${PermissionResources.STORE_EXPORT_MATERIAL}_${PermissionActions.UPDATE}`,
-        ]);
+    get isCanUpdate(): boolean {
+        return (
+            checkUserHasPermission(storeModule.userPermissionsExportMaterial, [
+                `${PermissionResources.STORE_EXPORT_MATERIAL}_${PermissionActions.UPDATE}`,
+            ]) && storeModule.selectedExportMaterial?.status !== AcceptStatus.APPROVE
+        );
     }
 
-    isCanApproveStatus(): boolean {
+    get isCanApproveStatus(): boolean {
         return checkUserHasPermission(storeModule.userPermissionsExportMaterial, [
             `${PermissionResources.STORE_EXPORT_MATERIAL}_${PermissionActions.APPROVE_STATUS}`,
         ]);

@@ -30,7 +30,6 @@ import FilterForm from '../components/exportMaterial/FilterForm.vue';
 import ExportMaterialFormPopup from '../components/exportMaterial/ExportMaterialFormPopup.vue';
 import { PermissionResources, PermissionActions } from '@/modules/role/constants';
 import { checkUserHasPermission } from '@/utils/helper';
-import { AcceptStatus } from '../constants';
 
 @Options({
     components: {
@@ -56,11 +55,9 @@ export default class ExportMaterialPage extends Vue {
 
     // check permission
     get isCanCreate(): boolean {
-        return (
-            checkUserHasPermission(storeModule.userPermissionsExportMaterial, [
-                `${PermissionResources.STORE_EXPORT_MATERIAL}_${PermissionActions.CREATE}`,
-            ]) && storeModule.selectedExportMaterial?.status !== AcceptStatus.APPROVE
-        );
+        return checkUserHasPermission(storeModule.userPermissionsExportMaterial, [
+            `${PermissionResources.STORE_EXPORT_MATERIAL}_${PermissionActions.CREATE}`,
+        ]);
     }
 
     created(): void {

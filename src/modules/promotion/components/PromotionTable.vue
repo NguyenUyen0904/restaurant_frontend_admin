@@ -158,13 +158,13 @@ export default class PromotionTable extends mixins(PromotionMixins) {
         return promotionModule.promotionList;
     }
 
-    isCanDelete(): boolean {
+    get isCanDelete(): boolean {
         return checkUserHasPermission(promotionModule.userPermissionsPromotion, [
             `${PermissionResources.PROMOTION}_${PermissionActions.DELETE}`,
         ]);
     }
 
-    isCanUpdate(): boolean {
+    get isCanUpdate(): boolean {
         return checkUserHasPermission(promotionModule.userPermissionsPromotion, [
             `${PermissionResources.PROMOTION}_${PermissionActions.UPDATE}`,
         ]);
