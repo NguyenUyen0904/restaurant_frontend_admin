@@ -132,6 +132,8 @@ export default {
                 [ModuleName.BILLING]: 'Billing',
                 [ModuleName.CLOSING_REVENUE]: 'Closing Revenue',
                 [ModuleName.ROLE]: 'Role',
+                [ModuleName.PROMOTION]: 'Promotiom',
+
             },
         },
         error: {

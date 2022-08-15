@@ -212,6 +212,7 @@ export enum ModuleName {
     STORE_CHECK_INVENTORY = 'storeCheckInventory',
     STORE_INVENTORY_DETAIL = 'storeInventoryDetail',
     BILLING = 'billing',
+    PROMOTION = 'promotion',
     CLOSING_REVENUE = 'closingRevenue',
     ROLE = 'role',
 }

@@ -130,6 +130,7 @@ export default {
                 [ModuleName.BILLING]: 'Hóa đơn',
                 [ModuleName.CLOSING_REVENUE]: 'Chốt doanh thu',
                 [ModuleName.ROLE]: 'Vai trò',
+                [ModuleName.PROMOTION]: 'Khuyến mại',
             },
         },
         error: {
