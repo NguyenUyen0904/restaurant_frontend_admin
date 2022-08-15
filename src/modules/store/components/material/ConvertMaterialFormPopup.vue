@@ -105,7 +105,7 @@
                     v-model:value="form.quantityTo"
                     :min="0"
                     :isRequired="true"
-                    :label="$t('store.convertHistory.convertHistoryPopup.quantityFrom')"
+                    :label="$t('store.convertHistory.convertHistoryPopup.quantityTo')"
                     :error="translateYupError(form.errors.quantityTo)"
                 />
                 <BaseInputText

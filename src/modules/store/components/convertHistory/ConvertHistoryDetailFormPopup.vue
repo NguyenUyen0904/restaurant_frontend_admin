@@ -99,7 +99,7 @@
                 <BaseInputText
                     :isDisabled="true"
                     :value="selectedConvertHistory.quantityTo"
-                    :label="$t('store.convertHistory.convertHistoryPopup.quantityFrom')"
+                    :label="$t('store.convertHistory.convertHistoryPopup.quantityTo')"
                 />
                 <BaseInputText
                     :isDisabled="true"

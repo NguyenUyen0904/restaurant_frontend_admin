@@ -29,16 +29,19 @@ const validateConvertMaterialSchema = yup.object({
         .number()
         .integer()
         .min(0)
-        .optional()
         .transform((val) => (isNaN(val) ? null : val))
-        .max(yup.ref('quantityBeforeConvertFrom')),
+        .max(yup.ref('quantityBeforeConvertFrom'))
+        .nullable()
+        .optional()
+        .required(),
     quantityBeforeConvertFrom: yup
         .number()
         .integer()
         .min(0)
-        .optional()
         .transform((val) => (isNaN(val) ? null : val))
-        .max(INPUT_NUMBER_MAX_VALUE),
+        .max(INPUT_NUMBER_MAX_VALUE)
+        .nullable()
+        .optional(),
     idMaterialTo: yup
         .number()
         .integer()
@@ -50,9 +53,11 @@ const validateConvertMaterialSchema = yup.object({
         .number()
         .integer()
         .min(0)
-        .optional()
         .transform((val) => (isNaN(val) ? null : val))
-        .max(yup.ref('quantityBeforeConvertTo')),
+        .max(yup.ref('quantityBeforeConvertTo'))
+        .nullable()
+        .optional()
+        .required(),
     quantityBeforeConvertTo: yup
         .number()
         .integer()
