@@ -19,8 +19,9 @@ export default {
             id: 'ID',
             name: 'Name',
             note: 'Note',
-            percent: 'Percent   ',
-            actions: 'Hành động',
+            percent: 'Percent',
+            status: 'Status',
+            actions: 'Actions',
         },
     },
 

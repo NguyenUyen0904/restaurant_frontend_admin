@@ -33,6 +33,54 @@
                 </template>
             </el-table-column>
             <el-table-column
+                prop="note"
+                width="100"
+                align="center"
+                :label="$t('promotion.promotion.promotionTable.header.status')"
+            >
+                <template #default="scope">
+                    {{ scope.row.note }}
+                    <div class="accept-status-select">
+                        <el-dropdown trigger="click">
+                            <div
+                                :class="`badge status-field badge-md bg-${statusBadge(
+                                    scope.row.status,
+                                )}`"
+                            >
+                                <span> {{ scope.row.status }} </span>
+                                <ArrowDownBoldIcon class="action-icon arrow-down" />
+                            </div>
+                            <template #dropdown>
+                                <div v-if="status !== AcceptStatus.APPROVE">
+                                    <el-dropdown-menu>
+                                        <el-dropdown-item
+                                            @click="
+                                                setStatus(
+                                                    scope.row.id,
+                                                    PromotionStatus.ACTIVE,
+                                                )
+                                            "
+                                        >
+                                            {{ PromotionStatus.ACTIVE }}
+                                        </el-dropdown-item>
+                                        <el-dropdown-item
+                                            @click="
+                                                setStatus(
+                                                    scope.row.id,
+                                                    PromotionStatus.INACTIVE,
+                                                )
+                                            "
+                                        >
+                                            {{ PromotionStatus.INACTIVE }}
+                                        </el-dropdown-item>
+                                    </el-dropdown-menu>
+                                </div>
+                            </template>
+                        </el-dropdown>
+                    </div>
+                </template>
+            </el-table-column>
+            <el-table-column
                 align="center"
                 prop="id"
                 :label="$t('promotion.promotion.promotionTable.header.actions')"
@@ -45,7 +93,7 @@
                             effect="dark"
                             :content="$t('common.app.tooltip.edit')"
                             placement="top"
-                            v-if="isCanUpdate(scope.row?.status)"
+                            v-if="isCanUpdate()"
                         >
                             <el-button
                                 type="warning"
@@ -59,7 +107,7 @@
                             effect="dark"
                             :content="$t('common.app.tooltip.delete')"
                             placement="top"
-                            v-if="isCanDelete(scope.row?.status)"
+                            v-if="isCanDelete()"
                         >
                             <el-button
                                 type="danger"
@@ -81,12 +129,20 @@ import { mixins, Options } from 'vue-property-decorator';
 
 import { Delete as DeleteIcon, Edit as EditIcon } from '@element-plus/icons-vue';
 import { PermissionResources, PermissionActions } from '@/modules/role/constants';
-import { checkUserHasPermission } from '@/utils/helper';
+import {
+    checkUserHasPermission,
+    showErrorNotificationFunction,
+    showSuccessNotificationFunction,
+} from '@/utils/helper';
 import { setup } from 'vue-class-component';
 import { PromotionMixins } from '../mixins';
 import { IPromotion, IPromotionUpdateBody } from '../types';
 import { promotionModule } from '../store';
 import { setupDelete } from '../composition/promotion';
+import { PromotionStatus } from '../constants';
+import i18n from '@/plugins/vue-i18n';
+import { ElLoading } from 'element-plus';
+import { promotionService } from '../services/api.service';
 
 @Options({
     name: 'promotion-table-component',
@@ -104,13 +160,13 @@ export default class PromotionTable extends mixins(PromotionMixins) {
 
     isCanDelete(): boolean {
         return checkUserHasPermission(promotionModule.userPermissionsPromotion, [
-            `${PermissionResources.MENU_CATEGORY}_${PermissionActions.DELETE}`,
+            `${PermissionResources.PROMOTION}_${PermissionActions.DELETE}`,
         ]);
     }
 
     isCanUpdate(): boolean {
         return checkUserHasPermission(promotionModule.userPermissionsPromotion, [
-            `${PermissionResources.MENU_CATEGORY}_${PermissionActions.UPDATE}`,
+            `${PermissionResources.PROMOTION}_${PermissionActions.UPDATE}`,
         ]);
     }
 
@@ -121,6 +177,44 @@ export default class PromotionTable extends mixins(PromotionMixins) {
 
     async onClickButtonDelete(id: number): Promise<void> {
         await this.deleteAction.deletePromotion(id);
+    }
+
+    async setStatus(id: number, status: PromotionStatus): Promise<void> {
+        const loading = ElLoading.service({
+            target: '.content',
+        });
+
+        const response = await promotionService.update(id, {
+            status: status,
+        });
+
+        loading.close();
+        if (response.success) {
+            showSuccessNotificationFunction(
+                i18n.global.t('store.checkInventory.message.update.success'),
+            );
+            const loading = ElLoading.service({
+                target: '.content',
+            });
+            await promotionModule.getPromotions();
+            loading.close();
+        } else {
+            showErrorNotificationFunction(response.message as string);
+            const loading = ElLoading.service({
+                target: '.content',
+            });
+            await promotionModule.getPromotions();
+            loading.close();
+        }
+    }
+
+    statusBadge(status: PromotionStatus): string {
+        switch (status) {
+            case PromotionStatus.ACTIVE:
+                return 'info';
+            case PromotionStatus.INACTIVE:
+                return 'danger';
+        }
     }
 }
 </script>

@@ -1,3 +1,4 @@
+import { PromotionStatus } from './constants';
 import { UtilMixins } from '@/mixins/utilMixins';
 import { mixins } from 'vue-property-decorator';
 import i18n from '@/plugins/vue-i18n';
@@ -5,7 +6,7 @@ import moment from 'moment';
 
 export class PromotionMixins extends mixins(UtilMixins) {
     YYYY_MM_DD_HYPHEN_HH_MM_COLON = this.DATE_TIME_FORMAT.YYYY_MM_DD_HYPHEN_HH_MM_COLON;
-
+    PromotionStatus = PromotionStatus;
     parseDateTimeTime = (date: string): string => {
         if (!date) {
             return '';

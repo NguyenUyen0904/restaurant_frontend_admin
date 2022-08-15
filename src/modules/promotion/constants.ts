@@ -12,3 +12,8 @@ export const validatePromotionSchema = yup.object({
         .transform((val) => (isNaN(val) ? null : val))
         .max(INPUT_NUMBER_MAX_VALUE),
 });
+
+export enum PromotionStatus {
+    ACTIVE = 'ACTIVE',
+    INACTIVE = 'INACTIVE',
+}

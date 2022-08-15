@@ -1,3 +1,4 @@
+import { PromotionStatus } from './constants';
 import { IQueryString } from '@/common/types';
 
 export interface IPromotion {
@@ -19,6 +20,7 @@ export interface IPromotionUpdateBody extends IPromotionCreateBody {
 
 export interface IQueryStringPromotion extends IQueryString {
     keyword?: string | null;
+    status?: PromotionStatus | null;
 }
 
 export type TModalType = 'Create' | 'Edit' | 'Close';

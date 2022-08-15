@@ -149,7 +149,6 @@
                             Một trong những nhà hàng ngon nhất tôi từng đến và thưởng
                             thức. Hương vị của từng món ăn rất đậm đà, lưu luyến.
                         </p>
-                       
                     </div>
                     <div class="testimony-item">
                         <div class="testimony-author">
@@ -165,7 +164,6 @@
                             Một trong những nhà hàng ngon nhất tôi từng đến và thưởng
                             thức. Hương vị của từng món ăn rất đậm đà, lưu luyến.
                         </p>
-                        
                     </div>
                     <div class="testimony-item">
                         <div class="testimony-author">
@@ -181,7 +179,6 @@
                             Một trong những nhà hàng ngon nhất tôi từng đến và thưởng
                             thức. Hương vị của từng món ăn rất đậm đà, lưu luyến.
                         </p>
-                        
                     </div>
                 </div>
             </div>
@@ -253,7 +250,7 @@
                             v-model:value="form.arrivalTime"
                             :placeholder="$t('booking.form.placeholder.arrivalTime')"
                             :label="$t('booking.form.arrivalTime')"
-                            :error="translateYupError(form.errors.arrivalTime|| '')"
+                            :error="translateYupError(form.errors.arrivalTime || '')"
                             :is-required="true"
                             :min-date="new Date()"
                             :type="'datetime'"
@@ -267,16 +264,13 @@
                             :is-required="true"
                             :placeholder="$t('booking.form.placeholder.numberPeople')"
                             :label="$t('booking.form.numberPeople')"
-                            :error="translateYupError(form.errors.numberPeople|| '')"
+                            :error="translateYupError(form.errors.numberPeople || '')"
                             @change="setNumberPeople"
                         />
                     </div>
                 </div>
                 <div class="mt-5 d-flex justify-content-center">
-                    <el-button
-                        type="primary"
-                        @click="onClickSaveButton"
-                    >
+                    <el-button type="primary" @click="onClickSaveButton">
                         {{ $t('booking.form.button.submit') }}
                     </el-button>
                 </div>
@@ -343,6 +337,8 @@ import FoodCard from '@/modules/menu/components/food/FoodCard.vue';
 import PromotionCard from '@/modules/promotion/components/PromotionCard.vue';
 import { promotionModule } from '@/modules/promotion/store';
 import { IPromotion } from '@/modules/promotion/types';
+import { PromotionStatus } from '@/modules/promotion/constants';
+import { LIMIT_PER_DROPDOWN } from '@/common/constants';
 
 @Options({
     name: 'guest-page-component',
@@ -382,6 +378,10 @@ export default class GuestLayout extends mixins(UtilMixins) {
 
     async created(): Promise<void> {
         appModule.mutateIsGuestPage(true);
+        promotionModule.setPromotionQueryString({
+            status: PromotionStatus.ACTIVE,
+            limit: LIMIT_PER_DROPDOWN,
+        });
         promotionModule.getPromotions();
         await menuModule.getDropdownCategories();
         await this.changeCategory(menuModule.categoryOptions[0].value as number);
@@ -401,7 +401,7 @@ export default class GuestLayout extends mixins(UtilMixins) {
             categories: [categoryId],
         });
         console.log(menuModule.foodQueryString);
-        
+
         await menuModule.getFoods();
     }
 }

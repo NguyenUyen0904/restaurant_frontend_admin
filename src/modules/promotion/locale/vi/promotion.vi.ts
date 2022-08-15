@@ -19,6 +19,7 @@ export default {
             name: 'Tên',
             note: 'Ghi chú',
             percent: 'Phần trăm',
+            status: 'Trạng thái',
             actions: 'Hành động',
         },
     },

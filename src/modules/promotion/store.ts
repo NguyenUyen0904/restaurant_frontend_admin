@@ -18,6 +18,7 @@ const initPromotionQueryString = {
     orderBy: DEFAULT_ORDER_BY,
     orderDirection: DEFAULT_ORDER_DIRECTION,
     keyword: null,
+    status: null,
 };
 
 @Module({ dynamic: true, namespaced: true, store, name: 'promotion' })
