@@ -16,6 +16,7 @@ export default {
 
     placeholder: {
         keyword: 'Nhập từ khóa',
+        note: 'Nhập ghi chú',
     },
 
     tooltip: {

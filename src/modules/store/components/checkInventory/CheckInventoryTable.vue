@@ -55,13 +55,9 @@
                     <div v-if="scope.row.status === AcceptStatus.APPROVE">
                         {{ parseMoney(scope.row.note) }}
                     </div>
-                    <BaseInputNumber
+                    <BaseInputText
                         v-model:value="scope.row.note"
-                        :placeholder="
-                            $t(
-                                'store.importMaterialDetail.importMaterialDetailTable.placeholder.pricePerUnit',
-                            )
-                        "
+                        :placeholder="$t('store.checkInventory.placeholder.note')"
                         @blur="updateCheckInventoryNote"
                         v-else
                     />

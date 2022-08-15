@@ -25,6 +25,7 @@ export default {
             id: 'ID',
             nameMaterial: 'Tên sản phẩm',
             pricePerUnit: 'Giá / đơn vị',
+            currentQuantity: 'Số lượng hiện tại',
             status: 'Trạng thái',
             quantity: 'Số lượng',
             unit: 'Đơn vị',
@@ -46,6 +47,7 @@ export default {
         update: {
             success: 'Cập nhật xuất kho thành công!',
         },
+        checkCurrentMaterial: 'Vui lòng kiểm tra lại số lượng hiện tại của: {material}!',
     },
 
     pageName: 'Chi tiết xuất kho: {date}',

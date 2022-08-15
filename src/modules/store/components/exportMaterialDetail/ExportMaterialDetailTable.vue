@@ -33,6 +33,19 @@
                 </template>
             </el-table-column>
             <el-table-column
+                prop="unit"
+                v-if="!isApprove"
+                :label="
+                    $t(
+                        'store.exportMaterialDetail.exportMaterialDetailTable.header.currentQuantity',
+                    )
+                "
+            >
+                <template #default="scope">
+                    {{ scope.row.material.quantity }}
+                </template>
+            </el-table-column>
+            <el-table-column
                 prop="exportPrice"
                 :label="
                     $t(
@@ -50,7 +63,6 @@
                             )
                         "
                         @blur="updatePricePerUnit"
-                        @change="changeDataRow(scope.row.id)"
                         v-else
                     />
                 </template>
@@ -72,8 +84,8 @@
                                 'store.exportMaterialDetail.exportMaterialDetailTable.placeholder.quantity',
                             )
                         "
-                        @blur="updateQuantity"
-                        @change="changeDataRow(scope.row.id)"
+                        @blur="updateQuantity(scope.row)"
+                        :max="scope.row.material.quantity"
                         v-else
                     />
                 </template>
@@ -95,7 +107,6 @@
                         "
                         v-else
                         @blur="updateNote"
-                        @change="changeDataRow(scope.row.id)"
                     />
                 </template>
             </el-table-column>
@@ -151,10 +162,19 @@ export default class ExportMaterialDetailTable extends mixins(StoreMixins) {
         });
     }
 
-    async updateQuantity(data: string): Promise<void> {
-        await this.updateExportDetail({
-            quantity: data ? (data as unknown as number) : 0,
-        });
+    async updateQuantity(data: IExportMaterialDetail): Promise<void> {
+        console.log(data);
+        if (data.quantity > (data?.material?.quantity || 0)) {
+            showErrorNotificationFunction(
+                i18n.global.t('store.exportMaterialDetail.message.checkCurrentMaterial', {
+                    material: data.material.material,
+                }),
+            );
+        } else {
+            await this.updateExportDetail({
+                quantity: data.quantity ? (data.quantity as unknown as number) : 0,
+            });
+        }
     }
 
     async updateNote(data: string): Promise<void> {

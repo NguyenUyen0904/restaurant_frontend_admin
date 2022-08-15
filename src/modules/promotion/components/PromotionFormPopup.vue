@@ -23,7 +23,7 @@
                     :is-required="true"
                     :placeholder="$t('promotion.promotion.placeholder.name')"
                     :label="$t('promotion.promotion.promotionPopup.name')"
-                    :error="translateYupError(form.errors.name|| '')"
+                    :error="translateYupError(form.errors.name || '')"
                 />
             </div>
             <div class="col-md-6">

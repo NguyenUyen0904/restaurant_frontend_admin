@@ -16,6 +16,7 @@ export default {
 
     placeholder: {
         keyword: 'Enter keyword',
+        note: 'Enter note',
     },
 
     tooltip: {

@@ -72,7 +72,7 @@ export function initData() {
             pricePerUnit: values.pricePerUnit,
             quantity: values.quantity,
             note: values.note,
-            importMaterialId: storeModule.selectedExportMaterial?.id,
+            exportMaterialId: storeModule.selectedExportMaterial?.id,
         } as IExportMaterialDetailCreate;
         let response;
         const exportMaterialDetailId = storeModule.selectedExportMaterialDetail?.id;

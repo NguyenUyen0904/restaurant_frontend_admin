@@ -24,6 +24,7 @@ export default {
         header: {
             id: 'ID',
             nameMaterial: 'Name material',
+            currentQuantity: 'Current Quantity',
             pricePerUnit: 'Price/Unit',
             status: 'Status',
             quantity: 'Quantity',
@@ -52,6 +53,7 @@ export default {
         update: {
             success: 'Update status successfully!',
         },
+        checkCurrentMaterial: 'Please check current quantity of: {material} again!',
     },
 
     pageName: 'Export Material Detail: {date}',
