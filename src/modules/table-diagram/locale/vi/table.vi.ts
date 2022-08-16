@@ -19,7 +19,7 @@ export default {
     },
 
     tableCard: {
-        getBookingsOfTable: 'Lấy danh sách đăt bàn của bàn',
+        getBookingsOfTable: 'Lấy danh sách đăt bàn',
         editTable: 'Chỉnh sửa',
         startServe: 'Bắt đầu phục vụ khách',
         endServe: 'Kết thúc phục vụ khách',
