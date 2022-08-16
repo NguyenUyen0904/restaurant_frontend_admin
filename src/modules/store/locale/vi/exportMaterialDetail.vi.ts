@@ -7,7 +7,7 @@ export default {
         currentQuantity: 'Số lượng hiện tại',
         quantity: 'Số lượng',
         note: 'Ghi chú',
-        totalPrice: 'Tổng nhập hàng : ',
+        totalPrice: 'Tổng xuất hàng : ',
         placeholder: {
             material: 'Chọn nguyên liệu',
             pricePerUnit: 'Nhập giá / đơn vị',
