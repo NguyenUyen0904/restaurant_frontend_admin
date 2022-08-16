@@ -38,7 +38,7 @@
                             effect="dark"
                             :content="$t('common.app.tooltip.edit')"
                             placement="top"
-                            v-if="isCanUpdate(scope.row?.status)"
+                            v-if="isCanUpdate"
                         >
                             <el-button
                                 type="warning"
@@ -52,7 +52,7 @@
                             effect="dark"
                             :content="$t('common.app.tooltip.delete')"
                             placement="top"
-                            v-if="isCanDelete(scope.row?.status)"
+                            v-if="isCanDelete"
                         >
                             <el-button
                                 type="danger"

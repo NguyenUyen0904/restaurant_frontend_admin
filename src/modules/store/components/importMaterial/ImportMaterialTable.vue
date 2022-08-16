@@ -106,7 +106,7 @@
                             effect="dark"
                             :content="$t('store.importMaterial.tooltip.detail')"
                             placement="top"
-                            v-if="isCanUpdate(scope.row?.status)"
+                            v-if="isCanUpdate"
                         >
                             <el-button
                                 type="warning"

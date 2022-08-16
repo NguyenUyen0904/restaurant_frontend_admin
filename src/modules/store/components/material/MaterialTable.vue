@@ -165,7 +165,7 @@ export default class MaterialTable extends mixins(StoreMixins) {
 
     get isCanUpdate(): boolean {
         return checkUserHasPermission(storeModule.userPermissionsMaterial, [
-            `${PermissionResources.MENU_CATEGORY}_${PermissionActions.UPDATE}`,
+            `${PermissionResources.STORE_MATERIAL}_${PermissionActions.UPDATE}`,
         ]);
     }
 
