@@ -79,7 +79,7 @@
             >
                 <template #default="scope">
                     <div v-if="scope.row.status === AcceptStatus.APPROVE">
-                        {{ parseMoney(scope.row.note) }}
+                        {{ scope.row.note }}
                     </div>
                     <BaseInputNumber
                         v-model:value="scope.row.note"

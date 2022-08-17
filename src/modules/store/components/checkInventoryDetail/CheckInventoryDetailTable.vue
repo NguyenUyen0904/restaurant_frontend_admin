@@ -63,7 +63,6 @@
                             )
                         "
                         @blur="updateInventoryQuantity"
-                        @change="changeDataRow(scope.row.id)"
                         v-else
                     />
                 </template>
@@ -89,7 +88,6 @@
                             )
                         "
                         @blur="updateDamagedQuantity"
-                        @change="changeDataRow(scope.row.id)"
                         v-else
                     />
                 </template>
@@ -112,7 +110,6 @@
                         "
                         v-else
                         @blur="updateNote"
-                        @change="changeDataRow(scope.row.id)"
                     />
                 </template>
             </el-table-column>
@@ -187,13 +184,13 @@ export default class CheckInventoryDetailTable extends mixins(StoreMixins) {
 
     async updateInventoryQuantity(data: string): Promise<void> {
         await this.updateInventoryDetail({
-            damagedQuantity: data ? (data as unknown as number) : 0,
+            inventoryQuantity: data ? (data as unknown as number) : 0,
         });
     }
 
     async updateDamagedQuantity(data: string): Promise<void> {
         await this.updateInventoryDetail({
-            inventoryQuantity: data ? (data as unknown as number) : 0,
+            damagedQuantity: data ? (data as unknown as number) : 0,
         });
     }
 
@@ -213,7 +210,7 @@ export default class CheckInventoryDetailTable extends mixins(StoreMixins) {
         loading.close();
         if (response.success) {
             showSuccessNotificationFunction(
-                i18n.global.t('store.checkInventoryDetail.message.update.success'),
+                i18n.global.t('store.inventoryDetail.message.update.success'),
             );
             const loading = ElLoading.service({
                 target: '.content',

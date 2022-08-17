@@ -24,7 +24,7 @@ export default {
     message: {
         title: 'Notification',
         update: {
-            success: 'Update status successfully!',
+            success: 'Update successfully!',
         },
     },
 

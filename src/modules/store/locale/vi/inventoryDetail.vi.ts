@@ -29,7 +29,7 @@ export default {
         title: 'Thông báo',
 
         update: {
-            success: 'Cập nhật trạng thái thành công!',
+            success: 'Cập nhật thành công!',
         },
     },
 

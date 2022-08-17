@@ -19,7 +19,7 @@
                 "
             >
                 <template #default="scope">
-                    {{ scope.row.material.material }}
+                    {{ scope.row?.material?.material }}
                 </template>
             </el-table-column>
             <el-table-column

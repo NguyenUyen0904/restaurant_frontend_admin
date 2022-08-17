@@ -80,7 +80,7 @@
             >
                 <template #default="scope">
                     <div v-if="scope.row.status === AcceptStatus.APPROVE">
-                        {{ parseMoney(scope.row.note) }}
+                        {{ scope.row.note }}
                     </div>
                     <BaseInputNumber
                         v-model:value="scope.row.note"
@@ -193,7 +193,7 @@ export default class ExportMaterialTable extends mixins(StoreMixins) {
         });
 
         const response = await exportMaterialService.update(data.id, {
-            status: data.status,
+            status: data.status
         });
 
         loading.close();
